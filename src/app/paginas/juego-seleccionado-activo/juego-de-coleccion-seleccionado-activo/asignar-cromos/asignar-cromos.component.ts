@@ -334,6 +334,9 @@ export class AsignarCromosComponent implements OnInit {
 
 
   AsignarCromoAlumnos(cromoSeleccionado) {
+
+    // RECOGE ALUMNO SELECCIONADO TABLA
+
     this.dataSource.data.forEach(row => {
       if (this.selection.isSelected(row)) {
         let alumno: Alumno;
@@ -343,10 +346,14 @@ export class AsignarCromosComponent implements OnInit {
         let alumnoJuegoDeColeccion: AlumnoJuegoDeColeccion;
         alumnoJuegoDeColeccion = this.inscripcionesAlumnos.filter(res => res.alumnoId === alumno.id)[0];
         console.log(alumnoJuegoDeColeccion);
+    
+    // RECOGE ALUMNO SELECCIONADO TABLA
+
 
         // Comprobamos si se ha completado la Colección antes de haber asignado el/los Cromo/s
         // tslint:disable-next-line:max-line-length
-        this.calculos.CompruebaFinalizacionColeccion(this.juegoSeleccionado.coleccionId, alumnoJuegoDeColeccion.id, undefined).subscribe((finalizacionAntes) => {
+        this.calculos.CompruebaFinalizacionColeccion(this.juegoSeleccionado.coleccionId, alumnoJuegoDeColeccion.id, undefined)
+        .subscribe((finalizacionAntes) => {
 
           this.peticionesAPI.AsignarCromoAlumno(new Album (alumnoJuegoDeColeccion.id, cromoSeleccionado))
           .subscribe(res => {

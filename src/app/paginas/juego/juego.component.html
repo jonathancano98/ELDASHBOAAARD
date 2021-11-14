@@ -156,6 +156,21 @@
                         <img src="../assets/collectionicon.svg" class = "imagenPanelJuegos" />
                       </div>
                     </div>
+
+
+
+                   <!-- ----------------------------------------------AÑADIDO----------------------------------------------------- -->
+                    <!-- <div class = "enColumna" (click) = "TipoDeJuegoSeleccionado ('Juego De Memorama')" style = "background: rgb(50, 155, 94); width:22%">
+                      <div style = "height: 10%"><strong>Juego de Memorama</strong></div>
+                      <br>
+                      <div style = "height: 40%" >
+                        <img src="../assets/collectionicon.svg" class = "imagenPanelJuegos" />
+                      </div>
+                    </div> -->
+                    
+                  <!-- ----------------------------------------------AÑADIDO----------------------------------------------------- -->
+
+
                     <div class = "enColumna" (click) = "TipoDeJuegoSeleccionado ('Juego De Competición')" style = "background: rgb(168, 119, 85); width:22%">
                       <div style = "height: 10%"><strong>Juego de Competición</strong></div>
                       <br>
@@ -229,11 +244,12 @@
                         <img src="../assets/cuentos.png" class = "imagenPanelJuegos" />
                       </div>
                     </div>
-                    <div class = "enColumna"  style = " width:22%">
-                      <div style = "height: 10%"><strong></strong></div>
+                    <div class = "enColumna" (click) = "TipoDeJuegoSeleccionado ('Juego De Memorama')" style = "background: rgb(50, 155, 94);  width:22%">
+                      <div style = "height: 10%"><strong>Juego de Memorama</strong></div>
                       <br>
-                      <div style = "height: 40%" >
-                      </div>
+                      <!-- <div style = "height: 40%" >
+                       <img src="../assets/collectionicon.svg" class = "imagenPanelJuegos" /> 
+                      </div> -->
                     </div>
                
 
@@ -457,6 +473,67 @@
 
               </div>
 
+              <!-- ////////////////////////////SI ESCOGEMOS EL JUEGO DE TIPO DE MEMORAMA ////////////////////////////////-->
+
+              <div *ngIf="tipoDeJuegoSeleccionado === 'Juego De Memorama' && tengoModo">
+
+                <!-- Aun no se si hare equipos!!!! -->
+
+                <!-- <mat-step *ngIf="modoDeJuegoSeleccionado  === 'Equipos'">
+                  <ng-template matStepLabel><div>Asignación</div></ng-template>
+                  <div>
+                    <label class = "LabelStepper">Selecciona el modo de asignación:</label>
+                    <mat-radio-group aria-labelledby="example-radio-group-label" class="radio-group">
+                        <mat-radio-button (click)="modoAsignacion = 'Equipo'" class="radio-button" [value]="'Equipo'" >
+                          <label style="color: black;">Asignacion al equipo</label>
+                        </mat-radio-button>
+                        <mat-radio-button (click)="modoAsignacion = 'Individual'" class="radio-button" [value]="'Individual'">
+                          <label style="color: black;">Asignación individual (los alumnos comparten album con sus compañeros de equipo) </label>
+                        </mat-radio-button>
+                    </mat-radio-group>
+    
+                    <span *ngIf = "modoAsignacion" style ="font-weight: bold;color:green;"> Has elegido ... {{modoAsignacion}}</span>
+    
+                  </div>
+                  <div class="btnCambiarStep">
+                    <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
+                    <button [disabled]="!modoAsignacion" type="button" class="btn Next" matStepperNext>Siguiente</button>
+                  </div>
+                </mat-step> -->
+    
+                     <!-- TERCER PASO: ASIGNACIÓN DE COLECCIÓN AL JUEGO -->
+                    <mat-step>
+                      <ng-template matStepLabel>
+                        <div>Familia</div>
+                      </ng-template>
+
+                  
+                  <label class="LabelStepper" style = "font-size: larger; font-weight: bolder;">Selecciona una familia</label>
+                
+                  <!-- Nos vamos al componente para asignar la familia -->
+                  <app-asignacion-familia-juego (emisorFamilia)="RecibeFamilia ($event)">
+                  </app-asignacion-familia-juego>
+                  <span *ngIf="tengoColeccion" style="font-weight: bold;color:green;"> Has elegido ...
+                    {{tipoDeJuegoSeleccionado}}: {{familiaSeleccionada.Nombre}} ... {{modoDeJuegoSeleccionado}}
+                  </span>
+                  <div class="btnCambiarStep">
+                    <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
+                    <button type="button" class="btn Next" matStepperNext>Siguiente</button>
+                  </div>
+                </mat-step>
+                <!-- ULTIMO PASO: CREACIÓN DEl JUEGO DE Memorama-->
+                <mat-step>
+                  <ng-template matStepLabel>Fin</ng-template>
+                  <span *ngIf="tengoFamilia" style="font-weight: bold;color:green;"> Has elegido ...
+                    {{tipoDeJuegoSeleccionado}}: {{familiaSeleccionada.Nombre}} ... {{modoDeJuegoSeleccionado}}
+                  </span>
+                  <div class="btnCambiarStep">
+                    <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
+                    <button style="width: 60%" type="button" class="btn Aceptar"
+                      (click)="CrearJuegoDeMemorama();">Crear juego de Memorama</button>
+                  </div>
+                </mat-step>
+              </div>
 
 
 

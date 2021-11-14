@@ -26,6 +26,10 @@ import {
   JuegoDeControlDeTrabajoEnEquipo, AlumnoJuegoDeControlDeTrabajoEnEquipo, EquipoJuegoDeCuestionario, Evento, AlumnoJuegoDeCuento, JuegoDeCuento, RecursoCuento, RecursoCuentoJuego
 } from '../../clases/index';
 
+import { JuegoMEMORAMA } from 'src/app/clases/JuegoMemorama';
+
+
+
 
 
 
@@ -54,6 +58,8 @@ import { EquipoJuegoDeVotacionUnoATodos } from 'src/app/clases/EquipoJuegoDeVota
 import { concursoLibro } from 'src/app/clases/clasesParaLibros/concursoLibro';
 import { RecursoLibroJuego } from 'src/app/clases/clasesParaLibros/recurosLibroJuego';
 import { RecursoLibro } from 'src/app/clases/clasesParaLibros/recursoLibro';
+import { AlumnoJuegoDeMemorama } from 'src/app/clases/AlumnoJuegoDeMemorama';
+import { EquipoJuegoDeMemorama } from 'src/app/clases/EquipoJuegoDeMemorama';
 
 
 export interface OpcionSeleccionada {
@@ -158,7 +164,10 @@ export class JuegoComponent implements OnInit {
 
   // información para crear un juego de colección
   coleccionSeleccionada: Coleccion;
+  familiaSeleccionada: any;
+
   tengoColeccion = false;
+  tengoFamilia=false;
   startDate = new Date(2019, 0, 1);
   startatpicker;
   modoAsignacion;
@@ -601,13 +610,14 @@ export class JuegoComponent implements OnInit {
   //   }
   // }
   
+  //AQUI ES DONDE RECOJEMOS QUE TIPO DE JUEGO ES
 
   TipoDeJuegoSeleccionado(tipo: string) {
     if ((tipo === 'Control de trabajo en equipo') && (!this.equiposGrupo)) {
       Swal.fire('Alerta', 'No ha equipos en este grupo', 'warning');
     } else {
       this.tipoDeJuegoSeleccionado = tipo;
-      console.log(' tengo tipo ' + tipo);
+      console.log(' TIPO DE JUEGO QUE VOY A ESCOGER: ' + tipo);
       this.tengoTipo = true;
       // if (this.tipoDeJuegoSeleccionado === 'Juego De Competición') {
       //     this.NumeroDeVueltas();
@@ -618,6 +628,7 @@ export class JuegoComponent implements OnInit {
 
   // Recoge el modo de juego seleccionado y lo mete en la variable (modoDeJuegoSeleccionado), la cual se usará después
   // para el POST del juego
+  
   ModoDeJuegoSeleccionado(modo: ChipColor) {
     this.modoDeJuegoSeleccionado = modo.nombre;
     console.log(' tengo modo ' + this.modoDeJuegoSeleccionado);
@@ -1283,14 +1294,77 @@ export class JuegoComponent implements OnInit {
     });
   }
 
-  
+  /// Funciones PARA LA CREACION DE JUEGO DE FAMILIA
+  RecibeFamilia($event) {
+    console.log("EVENTO",$event);
+    this.familiaSeleccionada = $event;
+    this.tengoFamilia = true;
+  }
+
 
   /// FUNCIONES PARA LA CREACION DE JUEGO DE COLECCIÓN
 
   // Recibo el nombre de la colección elegida en el componente hijo
   RecibeColeccion($event) {
+    console.log("EVENTO",$event);
     this.coleccionSeleccionada = $event;
-    this.tengoColeccion = true;
+    this.tengoFamilia = true;
+  }
+
+
+  CrearJuegoDeMemorama() {
+
+    console.log("HOOOOOOOOLAAAAAAAA");
+    console.log("Tipo:",this.tipoDeJuegoSeleccionado,"Modo:",this.modoDeJuegoSeleccionado,"familiaId:",this.familiaSeleccionada.id,"Nombre:",this.nombreDelJuego,"grupoId:",this.grupo.id);
+
+    let JuegoMemoramaaentrtrar: JuegoMEMORAMA;
+
+    JuegoMemoramaaentrtrar = new JuegoMEMORAMA(this.tipoDeJuegoSeleccionado,this.modoDeJuegoSeleccionado,this.familiaSeleccionada.id,true, this.nombreDelJuego);
+
+    console.log("JuegoMemoramaaentrtrar:");
+    console.log("JuegoMemoramaaentrtrar:",JuegoMemoramaaentrtrar);
+
+    this.peticionesAPI.CreaJuegoDeMemorama(JuegoMemoramaaentrtrar, this.grupo.id)
+      .subscribe(juegoCreado => {
+                                this.juego = juegoCreado;
+                                console.log(juegoCreado);
+                                console.log('Juego creado correctamente');
+                                this.sesion.TomaJuego(this.juego);
+                                this.juegoCreado = true;
+                                 
+                                //Registrar la Creación del Juego
+                                const evento: Evento = new Evento(1, new Date(), this.profesorId, undefined, undefined, this.juego.id, this.nombreDelJuego, 'Juego De Memorama');
+                                this.calculos.RegistrarEvento(evento);
+                                this.comService.EnviarNotificacionGrupo(1, this.grupo.id, `Nuevo Juego de Memorama para el Grupo ${this.grupo.Nombre}: ${this.nombreDelJuego}`);
+                                
+                                // Asignamos a los participantes en el juego
+                                if (this.modoDeJuegoSeleccionado === 'Individual') {
+                                  for (let i = 0; i < this.alumnosGrupo.length; i++) {
+                                    this.peticionesAPI.InscribeAlumnoJuegoDeMemorama(new AlumnoJuegoDeMemorama(this.alumnosGrupo[i].id, this.juego.id))
+                                      .subscribe();
+                                      
+                                    }
+                                  } 
+        
+                                else {
+                                    for (let i = 0; i < this.equiposGrupo.length; i++) {
+                                      this.peticionesAPI.InscribeEquipoJuegoDeMemorama(new EquipoJuegoDeMemorama(this.equiposGrupo[i].id, this.juego.id))
+                                        .subscribe();
+                                      }
+                                    }
+        Swal.fire('Juego de colección creado correctamente', ' ', 'success');
+
+        // El juego se ha creado como activo. Lo añadimos a la lista correspondiente
+        if (this.juegosActivos === undefined) {
+          // Si la lista aun no se ha creado no podre hacer el push
+          this.juegosActivos = [];
+        }
+        this.juegosActivos.push(this.juego);
+        this.Limpiar();
+        // Regresamos a la lista de equipos (mat-tab con índice 0)
+        this.tabGroup.selectedIndex = 0;
+    });
+
   }
 
   CrearJuegoDeColeccion() {
@@ -1307,15 +1381,6 @@ export class JuegoComponent implements OnInit {
         const evento: Evento = new Evento(1, new Date(), this.profesorId, undefined, undefined, this.juego.id, this.nombreDelJuego, 'Juego De Colección');
 
         this.calculos.RegistrarEvento(evento);
-        // let evento: Evento = new Evento(1, new Date(), this.profesorId, undefined, undefined, this.juego.id, this.nombreDelJuego, "Juego De Colección");
-        // this.peticionesAPI.CreaEvento(evento).subscribe((res) => {
-        //   console.log("Registrado evento: ", res);
-        // }, (err) => { 
-        //   console.log(err); 
-        // });
-
-        // Notificar a los Alumnos del Grupo
-        // tslint:disable-next-line:max-line-length
         this.comService.EnviarNotificacionGrupo(1, this.grupo.id, `Nuevo Juego de Colección para el Grupo ${this.grupo.Nombre}: ${this.nombreDelJuego}`);
 
 

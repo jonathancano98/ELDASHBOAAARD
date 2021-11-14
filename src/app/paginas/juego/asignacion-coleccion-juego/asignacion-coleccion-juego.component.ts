@@ -89,14 +89,18 @@ export class AsignacionColeccionJuegoComponent implements OnInit {
     console.log ('voy a traer colecciones');
     this.peticionesAPI.DameColeccionesDelProfesor(this.profesorId)
     .subscribe(colecciones => {
-      if (colecciones !== undefined) {
-        this.colecciones = colecciones;
-        this.datasourceColecciones = new MatTableDataSource(this.colecciones);
-      } else {
-        // Mensaje al usuario
-        console.log('Este profesor no tiene colecciones');
-      }
-    });
+                               if (colecciones !== undefined) {
+                                                                this.colecciones = colecciones;
+                                                                console.log("Coleccion: ",this.colecciones);
+
+                                                                this.datasourceColecciones = new MatTableDataSource(this.colecciones);
+                                                                console.log("this.datasourceColecciones:",this.datasourceColecciones);
+                                } 
+                              else {
+                                    // Mensaje al usuario
+                                    console.log('Este profesor no tiene colecciones');
+                                  }
+                                });
   }
 
 

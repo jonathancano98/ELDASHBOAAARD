@@ -34,6 +34,9 @@ import { EquipoJuegoDeEvaluacion } from '../clases/EquipoJuegoDeEvaluacion';
 import { AlumnoJuegoDeLibro } from '../clases/AlumnoJuegoDeLibro';
 import { RecursoLibro } from '../clases/clasesParaLibros/recursoLibro';
 import { JuegoDeLibros } from '../clases/JuegoDeLibros';
+import { AlumnoJuegoDeMemorama } from '../clases/AlumnoJuegoDeMemorama';
+import { EquipoJuegoDeMemorama } from '../clases/EquipoJuegoDeMemorama';
+import { JuegoMEMORAMA } from '../clases/JuegoMemorama';
 
 
 @Injectable({
@@ -71,7 +74,13 @@ export class PeticionesAPIService {
   private APIUrlHistorialPuntosEquipo = this.host + ':3000/api/HistorialesPuntosEquipo';
   private APIUrlJuegoDeColeccion = this.host + ':3000/api/JuegosDeColeccion';
   private APIUrlAlumnoJuegoDeColeccion = this.host + ':3000/api/AlumnosJuegoDeColeccion';
+
+  private APIUrlAlumnoJuegoDeMemorama = this.host + ':3000/api/AlumnoJuegoDeMemoramas';
+
+
   private APIUrlEquipoJuegoDeColeccion = this.host + ':3000/api/EquiposJuegoDeColeccion';
+  private APIUrlEquipoJuegoDeMemoramas = this.host + ':3000/api/EquipoJuegoDeMemoramas';
+
   private APIUrlAlbum = this.host + ':3000/api/Albumes';
   private APIUrlAlbumEquipo = this.host + ':3000/api/albumsEquipo';
   private APIUrlJuegoDeCompeticionLiga = this.host + ':3000/api/JuegosDeCompeticionLiga';
@@ -157,6 +166,7 @@ export class PeticionesAPIService {
   private APIUrlJuegoDeControlDeTrabajoEnEquipo = this.host + ':3000/api/juegosDeControlDeTrabajoEnEquipo';
   private APIUrlAlumnoJuegoDeControlDeTrabajoEnEquipo = this.host + ':3000/api/alumnosJuegoDeControlDeTrabajoEnEquipo';
   private APIUrlEventos = this.host + ':3000/api/Eventos';
+
 
   constructor(
     private http: HttpClient,
@@ -562,7 +572,13 @@ export class PeticionesAPIService {
   }
 
   public DameColeccionesDelProfesor(profesorId: number): Observable<Coleccion[]> {
+    console.log("DameColeccionesDelProfesor:",this.APIUrlProfesores + '/' + profesorId + '/coleccions');
     return this.http.get<Coleccion[]>(this.APIUrlProfesores + '/' + profesorId + '/coleccions');
+  }
+
+  public DameFamiliasDelProfesor(profesorId: number): Observable<any[]> {
+    console.log("DameFamiliasDelProfesor:",this.APIUrlProfesores + '/' + profesorId + '/familia');
+    return this.http.get<any[]>(this.APIUrlProfesores + '/' + profesorId + '/familia');
   }
 
   public DameColeccionesPublicas(): Observable<Coleccion[]> {
@@ -752,8 +768,24 @@ export class PeticionesAPIService {
   }
 
   public CreaJuegoDeColeccion(juego: Juego, grupoId: number): Observable<Juego> {
+    
     return this.http.post<Juego>(this.APIUrlGrupos + '/' + grupoId + '/juegoDeColeccions', juego);
   }
+
+
+
+  
+
+  public CreaJuegoDeMemorama(juego: JuegoMEMORAMA, grupoId: number): Observable<JuegoMEMORAMA> {
+    
+    console.log("JUEGO MEMORAMA:",juego,"HACEMOS POST A URL:",this.APIUrlGrupos + '/' + grupoId + '/juegoDeMemorama', juego);
+    return this.http.post<JuegoMEMORAMA>(this.APIUrlGrupos + '/' + grupoId + '/juegoDeMemorama', juego);
+  }
+
+
+
+
+
 
   // public CambiaEstadoJuegoDeColeccion(juegoDeColeccion: Juego, juegoDeColeccionId: number, grupoId: number): Observable<Juego> {
   //   return this.http.put<Juego>(this.APIUrlGrupos + '/' + grupoId + '/juegoDeColeccions/' + juegoDeColeccionId, juegoDeColeccion);
@@ -780,9 +812,33 @@ export class PeticionesAPIService {
     return this.http.post<AlumnoJuegoDeColeccion>(this.APIUrlAlumnoJuegoDeColeccion, alumnoJuegoDeColeccion);
   }
 
+
+
+
+  public InscribeAlumnoJuegoDeMemorama(alumnoJuegoDeMemorama: AlumnoJuegoDeMemorama) {
+    console.log("InscribeAlumnoJuegoDeMemorama",this.APIUrlAlumnoJuegoDeMemorama, alumnoJuegoDeMemorama);
+    return this.http.post<AlumnoJuegoDeMemorama>(this.APIUrlAlumnoJuegoDeMemorama, alumnoJuegoDeMemorama);
+  }
+  
+
+
+
+
+
   public InscribeEquipoJuegoDeColeccion(equipoJuegoDeColeccion: EquipoJuegoDeColeccion) {
     return this.http.post<EquipoJuegoDeColeccion>(this.APIUrlEquipoJuegoDeColeccion, equipoJuegoDeColeccion);
   }
+
+
+
+
+  public InscribeEquipoJuegoDeMemorama(equipoJuegoDeMemorama: EquipoJuegoDeMemorama) {
+    console.log("InscribeEquipoJuegoDeMemorama:",this.APIUrlEquipoJuegoDeMemoramas, equipoJuegoDeMemorama);
+    return this.http.post<EquipoJuegoDeMemorama>(this.APIUrlEquipoJuegoDeMemoramas, equipoJuegoDeMemorama);
+
+  }
+
+  
 
   ///////////////////////////////////////// GESTION DE JUEGO DE COLECCIÓN INDIVIDUAL //////////////////////////////////////////////////
 

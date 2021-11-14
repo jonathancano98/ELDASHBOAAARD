@@ -80,6 +80,12 @@ import { EditarInsigniaComponent } from './paginas/mis-puntos/editar-insignia/ed
 import { EditarColeccionComponent } from './paginas/mis-colecciones/editar-coleccion/editar-coleccion.component';
 import { AgregarCromoDialogComponent } from './paginas/mis-colecciones/agregar-cromo-dialog/agregar-cromo-dialog.component';
 import { AsignacionColeccionJuegoComponent } from './paginas/juego/asignacion-coleccion-juego/asignacion-coleccion-juego.component';
+
+
+
+
+
+
 // tslint:disable-next-line:max-line-length
 import { JuegoDeColeccionSeleccionadoActivoComponent } from './paginas/juego-seleccionado-activo/juego-de-coleccion-seleccionado-activo/juego-de-coleccion-seleccionado-activo.component';
 // tslint:disable-next-line:max-line-length
@@ -268,6 +274,7 @@ import { JuegoDeEvaluacionSeleccionadoInactivoComponent } from './paginas/juego-
 // tslint:disable-next-line:max-line-length
 import { JuegoDeControlDeTrabajoEnEquipoSeleccionadoActivoComponent } from './paginas/juego-seleccionado-activo/juego-de-control-de-trabajo-en-equipo-seleccionado-activo/juego-de-control-de-trabajo-en-equipo-seleccionado-activo.component';
 import { AsignarRubricaComponent } from './paginas/juego/asignar-rubrica/asignar-rubrica.component';
+import { AsignacionFamiliaJuegoComponent } from './paginas/juego/asignacion-familia-juego/asignacion-familia-juego.component';
 
 
 @NgModule({
@@ -427,7 +434,8 @@ import { AsignarRubricaComponent } from './paginas/juego/asignar-rubrica/asignar
     AsignarRubricaComponent,
     ActividadRegistroComponent,
     ActividadGraficosComponent,
-    ActividadConfigComponent
+    ActividadConfigComponent,
+    AsignacionFamiliaJuegoComponent
 
   ],
   imports: [
