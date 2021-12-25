@@ -37,6 +37,7 @@ import { JuegoDeLibros } from '../clases/JuegoDeLibros';
 import { AlumnoJuegoDeMemorama } from '../clases/AlumnoJuegoDeMemorama';
 import { EquipoJuegoDeMemorama } from '../clases/EquipoJuegoDeMemorama';
 import { JuegoMEMORAMA } from '../clases/JuegoMemorama';
+import{Carta} from 'src/app/clases/Carta';
 
 
 @Injectable({
@@ -103,7 +104,20 @@ export class PeticionesAPIService {
 
 
 
+  private APIUrlFamiliasMemorama = this.host + ':3000/api/Familia';
+  private APIUrlCartas = this.host + ':3000/api/Cartas';
+
+
+
+
   // Para cargar y descargar imagenes
+
+
+  private APIUrlImagenCarta = this.host + ':3000/api/imagenes/ImagenCarta';
+  private APIUrlImagenFamiliaMemorama = this.host + ':3000/api/imagenes/ImagenFamilia';
+
+
+
   private APIUrlImagenAlumno = this.host + ':3000/api/imagenes/ImagenAlumno';
   private APIUrlImagenColeccion = this.host + ':3000/api/imagenes/ImagenColeccion';
   private APIUrlImagenCromo = this.host + ':3000/api/imagenes/ImagenCromo';
@@ -533,6 +547,7 @@ export class PeticionesAPIService {
   }
 
   public PonCromoColeccion(cromo: Cromo, coleccionId: number): Observable<Cromo> {
+    console.log("URL PON CROMO",this.APIUrlColecciones + '/' + coleccionId + '/cromos', cromo);
     return this.http.post<Cromo>(this.APIUrlColecciones + '/' + coleccionId + '/cromos', cromo);
   }
 
@@ -576,15 +591,93 @@ export class PeticionesAPIService {
     return this.http.get<Coleccion[]>(this.APIUrlProfesores + '/' + profesorId + '/coleccions');
   }
 
-  public DameFamiliasDelProfesor(profesorId: number): Observable<any[]> {
-    console.log("DameFamiliasDelProfesor:",this.APIUrlProfesores + '/' + profesorId + '/familia');
-    return this.http.get<any[]>(this.APIUrlProfesores + '/' + profesorId + '/familia');
-  }
 
   public DameColeccionesPublicas(): Observable<Coleccion[]> {
     return this.http.get<Coleccion[]>(this.APIUrlColecciones
       + '?filter[where][Publica]=true');
   }
+    ///////////////////////////////////////////// GESTION JUEGO MEMORAMA //////////////////////////////////////////////
+
+    // SE USA PARA EDITAR LA COLECCIÓN DEL PROFESOR. AMBOS IDENTIFICADORES LOS PASAMOS COMO PARÁMETRO
+
+    public CreaFamilia(familia: any, profesorId: number): Observable<any> {
+      return this.http.post<any>(this.APIUrlProfesores + '/' + profesorId + '/familia', familia);
+    }
+    public DameFamiliaMemorama(familiaId: number): Observable<any> {
+      return this.http.get<any>(this.APIUrlFamiliasMemorama + '/' + familiaId);
+    }
+    public PonImagenFamiliaMemorama(formData: FormData): Observable<any> {
+      return this.http.post<any>(this.APIUrlImagenFamiliaMemorama + '/upload', formData);
+    }
+  
+    public DameImagenFamiliaMemorama(imagen: string): Observable<any> {
+      return this.httpImagenes.get(this.APIUrlImagenFamiliaMemorama + '/download/' + imagen,
+        { responseType: ResponseContentType.Blob });
+    }
+
+    public BorraFamiliaMemorama(familiaId: number, profesorId: number): Observable<any> {
+
+      return this.http.delete<any>(this.APIUrlProfesores + '/' + profesorId + '/familia/' + familiaId);
+    }
+  
+    public PonCartaFamilia(carta: Carta, familiaId: number): Observable<Carta> {
+      return this.http.post<Carta>(this.APIUrlFamiliasMemorama + '/' + familiaId + '/cartas', carta);
+    }
+
+    public PonCartaFamilia2(carta: Carta): Observable<Carta> {
+      return this.http.post<Carta>(this.APIUrlCartas, carta);
+    }
+  
+    public PonImagenCarta(formData: FormData): Observable<any> {
+      return this.http.post<any>(this.APIUrlImagenCarta + '/upload', formData);
+    }
+
+    public DameImagenCarta(imagen: string): Observable<any> {
+      return this.httpImagenes.get(this.APIUrlImagenCarta + '/download/' + imagen,
+        { responseType: ResponseContentType.Blob });
+    }
+  
+    public ModificaCartaFamilia(carta: any, familiaId: number, cartaId: number): Observable<Cromo> {
+      return this.http.put<Cromo>(this.APIUrlFamiliasMemorama + '/' + familiaId + '/cartas/' + cartaId, carta);
+    }
+  
+    public BorrarCarta(cartaId: number): Observable<any> {
+      return this.http.delete<any>(this.APIUrlCartas + '/' + cartaId);
+    }
+  
+    public DameCartasFamilia(familiaId: number): Observable<any[]> {
+      return this.http.get<any[]>(this.APIUrlFamiliasMemorama + '/' + familiaId + '/cartas');
+    }
+  
+    public BorrarImagenFamilia(ImagenFamilia: string): Observable<any> {
+  
+      return this.http.delete<any>(this.APIUrlImagenFamiliaMemorama + '/files/' + ImagenFamilia);
+    }
+  
+    public BorrarImagenCarta(ImagenCarta: string): Observable<any> {
+      return this.http.delete<any>(this.APIUrlImagenCarta + '/files/' + ImagenCarta);
+    }
+
+
+      // SE USA PARA EDITAR LA COLECCIÓN DEL PROFESOR. AMBOS IDENTIFICADORES LOS PASAMOS COMO PARÁMETRO
+    public ModificaFamiliaMemorama(familia: any, profesorId: number, familiaId: number): Observable<Coleccion> {
+      return this.http.put<Coleccion>(this.APIUrlProfesores + '/' + profesorId + '/familia/' + familiaId, familia);
+    }
+
+    public DameFamiliasDelProfesor(profesorId: number): Observable<any[]> {
+      console.log("DameFamiliasDelProfesor:",this.APIUrlProfesores + '/' + profesorId + '/familia');
+      return this.http.get<any[]>(this.APIUrlProfesores + '/' + profesorId + '/familia');
+    }
+
+
+
+
+
+    // public ModificaFamilia(coleccion: Coleccion, profesorId: number, coleccionId: number): Observable<Coleccion> {
+
+    //   return this.http.put<Coleccion>(this.APIUrlProfesores + '/' + profesorId + '/coleccions/' + coleccionId, coleccion);
+
+    // }
 
 
   ///////////////////////////////////////////// GESTION JUEGO DE PUNTOS //////////////////////////////////////////////
@@ -780,6 +873,10 @@ export class PeticionesAPIService {
     
     console.log("JUEGO MEMORAMA:",juego,"HACEMOS POST A URL:",this.APIUrlGrupos + '/' + grupoId + '/juegoDeMemorama', juego);
     return this.http.post<JuegoMEMORAMA>(this.APIUrlGrupos + '/' + grupoId + '/juegoDeMemorama', juego);
+  }
+  
+  public DameJuegoDeMemoramaGrupo(grupoId: number): Observable<Juego[]> {
+    return this.http.get<Juego[]>(this.APIUrlGrupos + '/' + grupoId + '/juegoDeMemorama');
   }
 
 

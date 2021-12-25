@@ -23,7 +23,7 @@ import {
   JuegoDeVotacionUnoATodos, AlumnoJuegoDeVotacionUnoATodos,
   JuegoDeVotacionTodosAUno, AlumnoJuegoDeVotacionTodosAUno, CuestionarioSatisfaccion,
   JuegoDeCuestionarioSatisfaccion, AlumnoJuegoDeCuestionarioSatisfaccion, Rubrica,
-  JuegoDeControlDeTrabajoEnEquipo, AlumnoJuegoDeControlDeTrabajoEnEquipo, EquipoJuegoDeCuestionario, Evento, AlumnoJuegoDeCuento, JuegoDeCuento, RecursoCuento, RecursoCuentoJuego
+  JuegoDeControlDeTrabajoEnEquipo, AlumnoJuegoDeControlDeTrabajoEnEquipo, EquipoJuegoDeCuestionario, Evento, AlumnoJuegoDeCuento, JuegoDeCuento, RecursoCuento, RecursoCuentoJuego, JuegoDePuntos
 } from '../../clases/index';
 
 import { JuegoMEMORAMA } from 'src/app/clases/JuegoMemorama';
@@ -60,6 +60,8 @@ import { RecursoLibroJuego } from 'src/app/clases/clasesParaLibros/recurosLibroJ
 import { RecursoLibro } from 'src/app/clases/clasesParaLibros/recursoLibro';
 import { AlumnoJuegoDeMemorama } from 'src/app/clases/AlumnoJuegoDeMemorama';
 import { EquipoJuegoDeMemorama } from 'src/app/clases/EquipoJuegoDeMemorama';
+import * as URL from 'src/app/URLs/urls';
+
 
 
 export interface OpcionSeleccionada {
@@ -380,6 +382,18 @@ export class JuegoComponent implements OnInit {
   tengoNumeroDeControles = false;
   verRespuestasControl = false;
   tengoModoRespuestas = false;
+// MEMORAMA
+
+Mododificultad:string;
+numerocartas:any;
+vectorimagen:any[]=[];
+vectorcartas:any[]=[];
+vectorcartaseleccionadas:any[]=[];
+cartaseleccionada1:any;
+cartaseleccionada2:any;
+
+idcartas: any[]=[];
+
 
 
 
@@ -1311,6 +1325,168 @@ export class JuegoComponent implements OnInit {
     this.tengoFamilia = true;
   }
 
+  RegistraDificultad(){
+    console.log("Seleccion de Dificultad");
+    // const dif = document.getElementsByName('dificultad') as HTMLElement;
+
+    const radio1 = document.getElementById('radio1') as HTMLInputElement;
+    const radio2 = document.getElementById('radio1') as HTMLInputElement;
+    const radio3 = document.getElementById('radio1') as HTMLInputElement;
+
+   if (radio1.checked){
+
+      console.log("FACIL")
+      this.numerocartas="4";
+      this.Mododificultad = "facil";
+   }
+   else if (radio2.checked){      
+     console.log("MEDIA")
+     this.numerocartas="5";
+     this.Mododificultad = "media";
+
+  }
+   else{
+    console.log("DIFICIL")
+    this.numerocartas="6";
+    this.Mododificultad = "dificil";
+
+
+   }
+
+   console.log("MODO DIFICULTAD",this.Mododificultad);
+   console.log("Familia SELECCIONADA",this.familiaSeleccionada.Nombre);
+
+  this.seleccionarcartas()
+
+  }
+
+  async seleccionarcartas(){
+
+    this.vectorcartas= await this.peticionesAPI.DameCartasFamilia(this.familiaSeleccionada.id).toPromise();
+    console.log(this.vectorcartas,this.vectorcartas.length);
+
+  //  await this.peticionesAPI.DameCartasFamilia(this.familiaSeleccionada.id)
+  //   .subscribe(carta => {
+  //                         for(let i=0;carta.length>i;i++)
+  //                         {
+
+  //                         console.log(carta);
+  //                         this.vectorcartas.push(carta[i]);
+  //                         console.log("VECTOR CARTAS:",this.vectorcartas,this.vectorcartas.length,this.vectorcartas[0].length);
+  //                         }
+                         
+  //                       });
+                         
+                       this.preparaimagenes();
+
+  }
+
+  preparaimagenes(){
+
+    console.log("VECTORCRTAS:",this.vectorcartas);
+    console.log("LONGITUD VECTORCRTAS:",this.vectorcartas.length);
+
+    for (let i = 0; i < this.vectorcartas.length; i++) {
+      
+      const elem = this.vectorcartas[i];
+      console.log("URL:",URL.ImagenesCartas);
+      console.log("elem",elem.imagenDelante);
+      this.vectorimagen[i] = URL.ImagenesCartas + elem.imagenDelante;
+                      
+    }
+     console.log(this.vectorimagen);
+
+  }
+  CartaSeleccionada(i){
+
+    console.log("CARTA SELECCIONADA",i);
+    let carta = document.getElementById("carta"+i);
+    console.log(this.vectorcartas[i]);
+    this.vectorcartaseleccionadas.push(this.vectorcartas[i]);
+    console.log("CARTAS SIN SELECCIONAR:",this.cartaseleccionada1,this.cartaseleccionada2);
+
+    if(this.cartaseleccionada1 === undefined)
+    {
+      carta.style.border="5px solid red";
+      this.cartaseleccionada1=carta;
+      console.log("CARTA1",this.cartaseleccionada1)
+
+    }
+    else{
+      this.cartaseleccionada2=carta;
+      console.log("CARTA2",this.cartaseleccionada2)
+
+
+    }
+
+    console.log("CARTAS SELECCIONADAS:",this.cartaseleccionada1,this.cartaseleccionada2);
+
+
+    if (this.cartaseleccionada2 !== undefined){
+
+      
+
+      if(this.cartaseleccionada1 === this.cartaseleccionada2){
+
+      console.log("MISMA CARTA")
+      carta.style.border="";
+
+      }
+      else{
+        console.log("DIFERENTE CARTA")
+        carta.style.border="5px solid red";
+      }
+
+      this.cartaseleccionada1 = undefined;
+      this.cartaseleccionada2 = undefined;
+      console.log("CARTAS UNDEFINED:",this.cartaseleccionada1,this.cartaseleccionada2);
+
+
+    }
+
+    
+    // this.vectorcartaseleccionadas.push(carta);
+
+    // for(let i=0;this.vectorcartaseleccionadas.length>i;i++)
+    // {
+
+    //   if(carta = this.vectorcartaseleccionadas[i]){
+    //     console.log("DESELECCIONAR");
+    //     carta.style.border="5px solid red";
+    //     this.vectorcartaseleccionadas.splice(i,1);
+    //   }
+    //   else if(carta = this.vectorcartaseleccionadas[i]){
+    //     console.log("DESELECCIONARx2");
+    //     carta.style.border="";
+    //     this.vectorcartaseleccionadas.splice(i,1);
+
+    //   }
+    //   else{}
+
+    // }
+
+    console.log(this.vectorcartaseleccionadas);
+
+  //   for(let i=0;this.vectorcartaseleccionadas.length>i;i++)
+  //   {
+
+  //     if(this.vectorimagen[i] = this.vectorcartaseleccionadas[i]){
+  //       console.log("ELIMINAR");
+  //       this.vectorcartaseleccionadas.splice(i,1);
+  //      }
+  // }
+
+  }
+  RegistraCartas(){
+
+    console.log("CARTAS QUE VAN A SER USADAS EN EL JUEGO:",this.vectorcartaseleccionadas);
+     for(let i=0;this.vectorcartaseleccionadas.length>i;i++){
+       this.idcartas.push(this.vectorcartaseleccionadas[i].id);
+     }
+
+     console.log(this.idcartas);
+
+  }
 
   CrearJuegoDeMemorama() {
 
@@ -1319,7 +1495,7 @@ export class JuegoComponent implements OnInit {
 
     let JuegoMemoramaaentrtrar: JuegoMEMORAMA;
 
-    JuegoMemoramaaentrtrar = new JuegoMEMORAMA(this.tipoDeJuegoSeleccionado,this.modoDeJuegoSeleccionado,this.familiaSeleccionada.id,true, this.nombreDelJuego);
+    JuegoMemoramaaentrtrar = new JuegoMEMORAMA(this.tipoDeJuegoSeleccionado,this.modoDeJuegoSeleccionado,this.familiaSeleccionada.id,true, this.nombreDelJuego,this.idcartas);
 
     console.log("JuegoMemoramaaentrtrar:");
     console.log("JuegoMemoramaaentrtrar:",JuegoMemoramaaentrtrar);
@@ -1352,7 +1528,7 @@ export class JuegoComponent implements OnInit {
                                         .subscribe();
                                       }
                                     }
-        Swal.fire('Juego de colección creado correctamente', ' ', 'success');
+        Swal.fire('Juego de Memorama creado correctamente', ' ', 'success');
 
         // El juego se ha creado como activo. Lo añadimos a la lista correspondiente
         if (this.juegosActivos === undefined) {

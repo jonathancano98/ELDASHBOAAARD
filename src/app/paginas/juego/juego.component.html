@@ -247,9 +247,6 @@
                     <div class = "enColumna" (click) = "TipoDeJuegoSeleccionado ('Juego De Memorama')" style = "background: rgb(50, 155, 94);  width:22%">
                       <div style = "height: 10%"><strong>Juego de Memorama</strong></div>
                       <br>
-                      <!-- <div style = "height: 40%" >
-                       <img src="../assets/collectionicon.svg" class = "imagenPanelJuegos" /> 
-                      </div> -->
                     </div>
                
 
@@ -478,7 +475,6 @@
               <div *ngIf="tipoDeJuegoSeleccionado === 'Juego De Memorama' && tengoModo">
 
                 <!-- Aun no se si hare equipos!!!! -->
-
                 <!-- <mat-step *ngIf="modoDeJuegoSeleccionado  === 'Equipos'">
                   <ng-template matStepLabel><div>Asignación</div></ng-template>
                   <div>
@@ -501,8 +497,8 @@
                   </div>
                 </mat-step> -->
     
-                     <!-- TERCER PASO: ASIGNACIÓN DE COLECCIÓN AL JUEGO -->
-                    <mat-step>
+                     <!-- TERCER PASO: ASIGNACIÓN DE FAMILIA AL JUEGO -->
+                  <mat-step>
                       <ng-template matStepLabel>
                         <div>Familia</div>
                       </ng-template>
@@ -511,9 +507,8 @@
                   <label class="LabelStepper" style = "font-size: larger; font-weight: bolder;">Selecciona una familia</label>
                 
                   <!-- Nos vamos al componente para asignar la familia -->
-                  <app-asignacion-familia-juego (emisorFamilia)="RecibeFamilia ($event)">
-                  </app-asignacion-familia-juego>
-                  <span *ngIf="tengoColeccion" style="font-weight: bold;color:green;"> Has elegido ...
+                  <app-asignacion-familia-juego (emisorFamilia)="RecibeFamilia ($event)"></app-asignacion-familia-juego>
+                  <span *ngIf="tengoFamilia" style="font-weight: bold;color:green;"> Has elegido ...
                     {{tipoDeJuegoSeleccionado}}: {{familiaSeleccionada.Nombre}} ... {{modoDeJuegoSeleccionado}}
                   </span>
                   <div class="btnCambiarStep">
@@ -521,6 +516,44 @@
                     <button type="button" class="btn Next" matStepperNext>Siguiente</button>
                   </div>
                 </mat-step>
+
+                <!-- DIFICULTAD JUEGO-->
+                <mat-step>
+                  <ng-template matStepLabel>Dificultad</ng-template>
+                  <label class="LabelStepper" style = "font-size: larger; font-weight: bolder;">Selecciona una Dificultad:</label>
+                  
+                  <form action="">
+                    <input type="radio" id="radio1" name="dificultad" value="facil"> Fácil (4 Cartas)<br>
+                    <input type="radio" id="radio2" name="dificultad" value="medio"> Media (5 Cartas)<br>
+                    <input type="radio" id="radio3" name="dificultad" value="dificil"> Díficil (6 Cartas)
+                  </form>
+
+                  <div class="btnCambiarStep">
+                    <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
+                    <button (click)="RegistraDificultad()" type="button" class="btn Next" matStepperNext>Siguiente</button>
+                  </div>
+
+                </mat-step>
+
+                <!-- CARTAS A ESCOGER -->
+                <mat-step>
+                  <ng-template matStepLabel>Seleccion de Cartas</ng-template>
+                  <label class="LabelStepper" style = "font-size: larger; font-weight: bolder;">Selecciona {{numerocartas}} Cartas:</label>
+
+                  <div (click)="CartaSeleccionada(i)" class = "enFilaMEMO"  style = "background: rgb(255, 255, 255); width:22%" *ngFor="let elem of vectorimagen;let i = index" >
+                    <!-- <div style = "height: 10%"><strong>Juego de Cuentos</strong></div> -->
+                    <br>
+                    <div style = "height: 40%" >
+                      <img id="carta{{i}}" [src]="vectorimagen[i]" class = "imagenPanelJuegos" />
+                    </div>
+                  </div>
+                  <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
+                  <button (click)="RegistraCartas()" type="button" class="btn Next" matStepperNext>Siguiente</button>
+
+
+
+                </mat-step>
+
                 <!-- ULTIMO PASO: CREACIÓN DEl JUEGO DE Memorama-->
                 <mat-step>
                   <ng-template matStepLabel>Fin</ng-template>

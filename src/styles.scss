@@ -371,6 +371,17 @@ input[type=text] {
   justify-content: space-between;
   width: 100%;
 }
+.enFilaMEMO{
+
+  // border: 5px solid black;
+
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  justify-content: space-between;
+  width: 100%;
+  align-items: baseline;
+}
 .enColumna{
   display: flex;
   display: -webkit-flex;

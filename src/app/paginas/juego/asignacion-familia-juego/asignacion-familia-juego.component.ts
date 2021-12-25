@@ -18,7 +18,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class AsignacionFamiliaJuegoComponent implements OnInit {
 
-   // Para comunicar el nombre de la colección seleccionada a componente padre
+   // Para comunicar el nombre de la familia seleccionada a componente padre
    @Output() emisorFamilia = new EventEmitter <any>();
    grupoId: number;
    profesorId: number;
@@ -158,11 +158,10 @@ export class AsignacionFamiliaJuegoComponent implements OnInit {
 
   AsignarFamiliaAlJuego() {
     let familiaSeleccionada;
-    console.log ('Vamos a agregar LOS PUNTOS');
-    const tiposDePuntosSeleccionados = [];
+    console.log ('Vamos a agregar La Familia');
     this.datasourceFamilias.data.forEach ( row => {
       if (this.selection.isSelected(row)) {
-        // tiposDePuntosSeleccionados.push (row);
+        
         console.log ('hemos elegido ', row);
         familiaSeleccionada = row;
 
@@ -170,10 +169,6 @@ export class AsignacionFamiliaJuegoComponent implements OnInit {
     });
     
     this.emisorFamilia.emit (familiaSeleccionada);
-    //   this.isDisabled = false;
-
- 
-
   }
 
 

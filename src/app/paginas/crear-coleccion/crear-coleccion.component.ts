@@ -184,6 +184,7 @@ export class CrearColeccionComponent implements OnInit {
 
     nombreColeccion = this.myForm.value.nombreColeccion;
 
+    console.log("ID DEL PROFE Y ID COLECCON CREADA",this.profesorId, this.coleccionCreada.id);
     this.peticionesAPI.ModificaColeccion(new Coleccion(nombreColeccion, this.nombreImagen), this.profesorId, this.coleccionCreada.id)
     .subscribe((res) => {
       if (res != null) {

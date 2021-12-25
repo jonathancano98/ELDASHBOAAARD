@@ -18,15 +18,16 @@ export class JuegoMEMORAMA {
     JuegoTerminado: boolean;
     profesorId: number;
     cuestionarioId: number;
+    idcartas:string[];
   
-    constructor(Tipo?: string, Modo?: string,familiaId?:number, JuegoActivo?: boolean, NombreJuego?: string ) 
+    constructor(Tipo?: string, Modo?: string,familiaId?:number, JuegoActivo?: boolean, NombreJuego?: string, idcartas?: string[])  
     {
   
       this.Tipo = Tipo;
       this.Modo = Modo;
       this.JuegoActivo = JuegoActivo;
       this.familiaId = familiaId;
-     
       this.NombreJuego = NombreJuego;
+      this.idcartas = idcartas;
     }
 }

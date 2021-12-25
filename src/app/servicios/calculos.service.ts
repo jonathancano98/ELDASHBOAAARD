@@ -488,6 +488,20 @@ private async EliminarMatriculas(): Promise<any> {
       }
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////MEMORAMA
+    console.log ('vamos a por los juegos de MEMORAMA del grupo: ' + grupoID);
+    juegos = await this.peticionesAPI.DameJuegoDeMemoramaGrupo(grupoID).toPromise();
+    console.log('He recibido los juegos de MEMORAMA');
+    console.log(juegos);
+    for (let i = 0; i < juegos.length; i++) {
+      if (juegos[i].JuegoActivo === true) {
+        juegosActivos.push(juegos[i]);
+      } else {
+        juegosInactivos.push(juegos[i]);
+      }
+    }
+    // //////////////////////////////////////////////////////////////////////////////////////////////MEMORAMA
+
     console.log ('vamos a por los juegos de competicion liga del grupo: ' + grupoID);
     juegos = await this.peticionesAPI.DameJuegoDeCompeticionLigaGrupo(grupoID).toPromise();
     console.log('He recibido los juegos de coleccion');

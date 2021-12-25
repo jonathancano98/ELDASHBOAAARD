@@ -163,6 +163,9 @@ import { MisRecursosCuentoComponent }  from './paginas/mis-recursos-cuento/mis-r
 //import { ListadoCuentosComponent }  from './paginas/juego-seleccionado-activo/juego-de-cuento-seleccionado-activo/listado-cuentos/listado-cuentos.component';
 import { ReproductorCuentoComponent }  from './paginas/juego-seleccionado-activo/juego-de-cuento-seleccionado-activo/reproductor-cuento/reproductor-cuento.component';
 
+import { MisFamiliasmemoramaComponent } from './paginas/mis-familiasmemorama/mis-familiasmemorama.component';
+import { CrearFamiliasmemoramaComponent } from './paginas/crear-familiasmemorama/crear-familiasmemorama.component';
+
 const routes: Routes = [
 
 
@@ -290,6 +293,11 @@ const routes: Routes = [
   { path: 'inicio/:id/misColecciones/editarColeccion', component: EditarColeccionComponent },
   { path: 'inicio/:id/misColecciones/guardarColeccion', component: GuardarColeccionComponent },
   { path: 'inicio/:id/misColecciones/mostrarColeccion', component: MostrarColeccionComponent },
+
+  // FAMILIAS
+  { path: 'inicio/:id/misFamiliasmemorama', component: MisFamiliasmemoramaComponent },
+  { path: 'inicio/:id/crearFamiliasmemorama', component: CrearFamiliasmemoramaComponent },
+
 
   // PUNTOS E INSIGNIAS
   { path: 'inicio/:id/misPuntos/editarPunto', component: EditarPuntoComponent },
