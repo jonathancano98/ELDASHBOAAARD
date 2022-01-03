@@ -670,6 +670,12 @@ export class PeticionesAPIService {
     }
 
 
+    // SE USA PARA EDITAR UNA CARTA
+  public ModificaCarta(Carta: Carta,Cartoid:number): Observable<Carta> {
+    console.log("URL DEL POST:",this.APIUrlCartas + '/' + Cartoid, Carta);
+    return this.http.put<Carta>(this.APIUrlCartas + '/' + Cartoid, Carta);
+  }
+
 
 
 

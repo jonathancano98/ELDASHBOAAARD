@@ -1,0 +1,261 @@
+<div class="contenedor">
+  <mat-tab-group>
+<mat-tab label="Crear colección">
+
+  <!-- STEPPER -->
+
+    <mat-card class="panel" style= "width: 100%">
+
+      <mat-card-content>
+
+      <mat-horizontal-stepper #linearHorizontalStepper="matHorizontalStepper" [linear]="true" #stepper>
+
+
+        <!-- PRIMER PASO -->
+        <mat-step [stepControl]="myForm">
+
+        <form [formGroup]="myForm">
+          <ng-template matStepLabel>Nombre e imagen</ng-template>
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombreColeccion" required>
+            <mat-error>Este campo es obligatorio</mat-error>
+          </mat-form-field>
+
+          <!-- Lo que pasa en este div es que una vez se hace click en el boton se activa la funcion ActivarInputColeccion que lo que hace es enviar 
+          un evento a ExaminarImagenColeccion y aqui es donde se puede seleccionar la imagen y añade en imagenColeccion la foto y se muestra la foto. -->
+
+          <div>
+            
+              <input #file id = "inputColeccion" type="file" accept= 'image/*' (change)="ExaminarImagenFamilia($event)" style="display:none">
+              <img class="imagenCromo" *ngIf="imagenColeccion" mat-card-image [src]="imagenColeccion"> 
+              <button (click) = "ActivarInputColeccion()" type="button" class="btn Agregar">
+                Agregar Imagen<i class="material-icons">add_photo_alternate</i>
+              </button>
+          </div>
+
+          <!-- Hay dos botones de siguiente para un caso en el que no se haya creado la coleccion aún y otro que se activa si la coleccion ha sido creada
+          pero necesitas editar algun campo no se tenga que hacer un POST sino un PUT -->
+
+
+          <div class="btnCambiarStep">
+            <button *ngIf="coleccionYaCreada === false" class="btn Next"matStepperNext>Siguiente</button>
+            <button *ngIf="coleccionYaCreada === true"  class="btn Next" matStepperNext (click)= EditarFamilia() >Siguiente</button>
+          </div>
+        </form>
+        </mat-step>
+
+        <!-- En el siguiente paso decidimos si los cromos de esta colección son de una cara o de dos caras -->
+        <mat-step>
+          <ng-template matStepLabel><div>Caras de los cromos</div></ng-template>
+          <div>
+            <label class = "LabelStepper">Indica si los cromos de esta colección tienen una o dos caras:</label>
+
+            <form action="">
+              <input type="radio" name="caras"  > Cromos con una cara<br>
+              <input type="radio" name="caras" checked > Cromos con dos caras
+            </form>
+
+          </div>
+          <div class="btnCambiarStep">
+            <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
+            <button  (click)="RegistraNumeroDeCaras()" type="button" class="btn Next" matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+
+          <!-- AÑADIDO RELACIONES -->
+        <mat-step>
+        <ng-template matStepLabel>Relaciones</ng-template>
+        <div>
+          <label class = "LabelStepper">Indica si quieres que las cartas tengan relación entre ellas:</label>
+
+          <form action="">
+            <input id="relacion" type="radio" name="caras" checked > Con relación (Para cartas diferentes)<br>
+            <input id="sinrelacion" type="radio" name="caras" > Sin relación (Cartas iguales)
+          </form>
+
+        </div>
+
+        <div class="btnCambiarStep">
+          <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
+          <button (click)="RegistrarRelacion()"  type="button" class="btn Next" matStepperNext>Siguiente</button>
+        </div>
+
+        </mat-step>
+       
+  <!-- PASO AÑADIR CROMOS -->
+
+  <!-- <mat-step [stepControl]="myForm3">
+    <ng-template matStepLabel>Cromos</ng-template>
+
+    <form [formGroup]="myForm3">
+      <ng-template matStepLabel>Nombre e imagen</ng-template>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombreCarta" required>
+        <mat-error>Este campo es obligatorio</mat-error>
+      </mat-form-field>
+            <mat-card class="panel" >
+            <mat-card-header>
+              <mat-card-title>Crear nuevo cromo</mat-card-title>
+              <mat-card-subtitle>Introduce los parámetros</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+
+          
+  <div class="btnCambiarStep" style="margin-top:10px;">
+    <button mat-button matStepperPrevious type="button" class="btn Back" >Atrás</button>
+    <button (click)="goForward(stepper)" type="button" class="btn Next">Siguiente</button>
+  </div>
+    </form>
+  </mat-step> -->
+
+
+
+
+        <!-- PASO AÑADIR CROMOS -->
+        <mat-step [stepControl]="myForm2">
+          
+          <form [formGroup]="myForm2">
+            <ng-template matStepLabel>Cromos</ng-template>
+
+            <!-- <ng-template matStepLabel>Nombre e imagen</ng-template> -->
+            <!-- <mat-form-field>
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombreCromo" required>
+              <mat-error>Este campo es obligatorio</mat-error>
+            </mat-form-field> -->
+
+            <mat-card class="panel" >
+            <mat-card-header>
+              <mat-card-title>Crear nuevo cromo</mat-card-title>
+              <mat-card-subtitle>Introduce los parámetros</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+
+              <div class="form-group" style="margin: 15px;">
+                  <label for="inputNombreCromo">Nombre</label>
+                  <input matInput formControlName="nombreCromo" required placeholder="Escribe el nombre del cromo">
+                  <mat-error>Este campo es obligatorio</mat-error>
+
+
+                  <!-- <input  type="text" class="form-control" requiered [(ngModel)]="nombreCromo" placeholder="Escribe el nombre del cromo"> -->
+              </div>
+
+          </mat-card-content>
+
+
+          <div class="enFila" style="width: 70%">
+            <div>
+              <input #file id = "inputCromoDelante" type="file" accept= 'imagen/*' (change)="ExaminarImagenCartaDelante($event)" style="display:none">
+              <img class="imagenCromo" *ngIf="imagenCromoDelante" mat-card-image [src]="imagenCromoDelante">
+              <button (click) = "ActivarInputCartaDelante()" type="button" class="btn Agregar">
+              Imagen de delante <i class="material-icons">add_photo_alternate</i>
+              </button>
+            </div>
+
+            <div *ngIf ="dosCaras" >
+              <input #file id = "inputCromoDetras" type="file" accept= 'imagen/*' (change)="ExaminarImagenCartaDetras($event)" style="display:none">
+              <img class="imagenCromo" *ngIf="imagenCromoDetras"  mat-card-image [src]="imagenCromoDetras">
+              <button (click) = "ActivarInputCartaDetras()" type="button" class="btn Agregar">
+              Imagen de detras <i class="material-icons">add_photo_alternate</i>
+              </button>
+            </div>
+          </div>
+
+          <mat-card-actions align="end">
+            <button  (click) = "LimpiarCampos()" type="button" class="btn Back">Limpiar Campos</button>
+            <button  (click) = "AgregarCartaFamilia()"  class="btn Aceptar">Agregar Carta</button>
+          </mat-card-actions>
+
+           </mat-card>
+
+          <div>
+              <form *ngIf="cromosAgregados[0]">
+
+                <div>
+                  <p style="margin: 10px">
+                    <span style="font-weight: bold;">Cromos creados recientemente</span>
+                  </p>
+                </div>
+
+                <table  align="center" mat-table [dataSource]="cromosAgregados" class="example-container mat-elevation-z8">
+
+                  <ng-container matColumnDef="nombreCromo">
+                    <th mat-header-cell *matHeaderCellDef class="tituloColumnaTabla" style="width: 30%"> Nombre </th>
+                    <td mat-cell *matCellDef="let cromo"> {{cromo.Nombre}} </td>
+                  </ng-container>
+
+                  <!-- Delete Column -->
+                  <ng-container matColumnDef=" ">
+                    <th mat-header-cell *matHeaderCellDef class="tituloColumnaTabla"></th>
+                    <td mat-cell *matCellDef="let cromo">
+                      <button (click) = "BorrarCarta(cromo)" mat-icon-button matTooltip="Borrar el cromo {{cromo.Nombre}}">
+                        <i class="material-icons red md-36">delete</i>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+              </form>
+            </div>
+
+          <div class="btnCambiarStep" style="margin-top:10px;">
+              <button mat-button matStepperPrevious type="button" class="btn Back" >Atrás</button>
+              <button (click)="seleccionarcartas()" type="button" class="btn Next" matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+
+
+        <!-- CREAR RELACIONES -->
+
+        <mat-step *ngIf="NecessitaRelacion">
+          <ng-template matStepLabel>Relaciones Cartas</ng-template>
+
+          <label class="LabelStepper" style = "font-size: larger; font-weight: bolder;">Selecciona {{numerocartas}} Cartas:</label>
+
+          <div (click)="CartaSeleccionada(i)"  *ngFor="let elem of vectorimagen;let i = index" >
+            
+              <img class="carta" id="carta{{i}}" [src]="vectorimagen[i]" />
+            
+          </div>
+
+            <button (click)="EstableceRelacion()">relacionar</button>
+
+          <div class="btnCambiarStep" style="margin-top:10px;">
+            <button type="button" class="btn Back"   matStepperPrevious>Atrás</button>
+            <button (click)="RegistraCartasRelacionadas()" mat-button matStepperNext type="button" class="btn Next">Siguiente</button>
+
+        </div>
+
+
+        </mat-step>
+
+        <!-- PASO FINALIZAR -->
+        <mat-step>
+          <ng-template matStepLabel>Finalizar</ng-template>
+        <div>
+          <p> Coleccion creada correctamente. </p>
+          <p> Haga click en "Finalizar" para guardar los cambios.</p>
+        </div>
+
+          <div class="btnCambiarStep">
+            <button  type="button" class="btn Back"  matStepperPrevious>Atrás</button>
+            <button  type="button" class="btn Aceptar" (click) = "Finalizar()">Finalizar</button>
+          </div>
+        </mat-step>
+
+
+      </mat-horizontal-stepper>
+    </mat-card-content>
+  </mat-card>
+
+
+</mat-tab>
+
+</mat-tab-group>
+</div>

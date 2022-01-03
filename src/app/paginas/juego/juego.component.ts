@@ -1330,8 +1330,8 @@ idcartas: any[]=[];
     // const dif = document.getElementsByName('dificultad') as HTMLElement;
 
     const radio1 = document.getElementById('radio1') as HTMLInputElement;
-    const radio2 = document.getElementById('radio1') as HTMLInputElement;
-    const radio3 = document.getElementById('radio1') as HTMLInputElement;
+    const radio2 = document.getElementById('radio2') as HTMLInputElement;
+    const radio3 = document.getElementById('radio3') as HTMLInputElement;
 
    if (radio1.checked){
 
@@ -1365,19 +1365,7 @@ idcartas: any[]=[];
     this.vectorcartas= await this.peticionesAPI.DameCartasFamilia(this.familiaSeleccionada.id).toPromise();
     console.log(this.vectorcartas,this.vectorcartas.length);
 
-  //  await this.peticionesAPI.DameCartasFamilia(this.familiaSeleccionada.id)
-  //   .subscribe(carta => {
-  //                         for(let i=0;carta.length>i;i++)
-  //                         {
-
-  //                         console.log(carta);
-  //                         this.vectorcartas.push(carta[i]);
-  //                         console.log("VECTOR CARTAS:",this.vectorcartas,this.vectorcartas.length,this.vectorcartas[0].length);
-  //                         }
-                         
-  //                       });
-                         
-                       this.preparaimagenes();
+    this.preparaimagenes();
 
   }
 
@@ -1445,36 +1433,9 @@ idcartas: any[]=[];
     }
 
     
-    // this.vectorcartaseleccionadas.push(carta);
-
-    // for(let i=0;this.vectorcartaseleccionadas.length>i;i++)
-    // {
-
-    //   if(carta = this.vectorcartaseleccionadas[i]){
-    //     console.log("DESELECCIONAR");
-    //     carta.style.border="5px solid red";
-    //     this.vectorcartaseleccionadas.splice(i,1);
-    //   }
-    //   else if(carta = this.vectorcartaseleccionadas[i]){
-    //     console.log("DESELECCIONARx2");
-    //     carta.style.border="";
-    //     this.vectorcartaseleccionadas.splice(i,1);
-
-    //   }
-    //   else{}
-
-    // }
 
     console.log(this.vectorcartaseleccionadas);
 
-  //   for(let i=0;this.vectorcartaseleccionadas.length>i;i++)
-  //   {
-
-  //     if(this.vectorimagen[i] = this.vectorcartaseleccionadas[i]){
-  //       console.log("ELIMINAR");
-  //       this.vectorcartaseleccionadas.splice(i,1);
-  //      }
-  // }
 
   }
   RegistraCartas(){

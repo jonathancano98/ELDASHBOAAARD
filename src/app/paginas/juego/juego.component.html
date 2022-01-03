@@ -535,6 +535,7 @@
 
                 </mat-step>
 
+
                 <!-- CARTAS A ESCOGER -->
                 <mat-step>
                   <ng-template matStepLabel>Seleccion de Cartas</ng-template>
@@ -544,7 +545,7 @@
                     <!-- <div style = "height: 10%"><strong>Juego de Cuentos</strong></div> -->
                     <br>
                     <div style = "height: 40%" >
-                      <img id="carta{{i}}" [src]="vectorimagen[i]" class = "imagenPanelJuegos" />
+                      <img id="carta{{i}}" [src]="vectorimagen[i]"/>
                     </div>
                   </div>
                   <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
@@ -562,8 +563,7 @@
                   </span>
                   <div class="btnCambiarStep">
                     <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
-                    <button style="width: 60%" type="button" class="btn Aceptar"
-                      (click)="CrearJuegoDeMemorama();">Crear juego de Memorama</button>
+                    <button style="width: 60%" type="button" class="btn Aceptar" (click)="CrearJuegoDeMemorama();">Crear juego de Memorama</button>
                   </div>
                 </mat-step>
               </div>

@@ -1,0 +1,20 @@
+.enFilaMEMO{
+
+    // border: 5px solid black;
+  
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    justify-content: space-between;
+    width: 240px;
+    align-items: baseline;
+  }
+  .carta{
+    vertical-align: middle;
+    border-style: none;
+    height: 90px;
+    margin-bottom: 5px;
+    border: 2px solid;
+    border-radius: 10px;
+    
+  }
