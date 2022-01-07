@@ -110,7 +110,7 @@ pasarcartaseleccionada2:any;
 cartasquevoyaagregarafamilia: any[]=[];
 
 
-
+relacion: Boolean = false;
 
 
 
@@ -207,7 +207,7 @@ goForward(stepper: MatStepper){
     console.log('Entro a crear la familia ' + nombreFamilia);
     console.log(this.nombreImagen);
 
-    this.peticionesAPI.CreaFamilia (new Familia(nombreFamilia, this.nombreImagen, this.dosCaras), this.profesorId)
+    this.peticionesAPI.CreaFamilia (new Familia(nombreFamilia, this.nombreImagen, this.dosCaras,undefined,this.NecessitaRelacion), this.profesorId)
 
     .subscribe((res) => {
       if (res != null) {
@@ -643,6 +643,7 @@ goForward(stepper: MatStepper){
       console.log("NO QUIERE RELACION");
 
     }
+    this.CrearFamilia();
 
   }
 
@@ -653,7 +654,7 @@ goForward(stepper: MatStepper){
     } else {
       this.dosCaras = true;
     }
-    this.CrearFamilia();
+    
   }
 
    // Activa la función SeleccionarInfoColeccion

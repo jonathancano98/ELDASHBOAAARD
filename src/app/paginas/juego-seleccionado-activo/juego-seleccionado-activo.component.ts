@@ -24,7 +24,8 @@ export class JuegoSeleccionadoActivoComponent implements OnInit {
   ngOnInit() {
     
     this.juegoSeleccionado = this.sesion.DameJuego();
-    console.log ('juego seleccionado: ' + this.juegoSeleccionado.Tipo);
+    console.log ('juego seleccionado: ' + this.juegoSeleccionado.Tipo +this.juegoSeleccionado.NombreJuego);
+    localStorage.setItem("Nombrejuego",this.juegoSeleccionado.NombreJuego);
 
   }
 

@@ -165,6 +165,7 @@ import { ReproductorCuentoComponent }  from './paginas/juego-seleccionado-activo
 
 import { MisFamiliasmemoramaComponent } from './paginas/mis-familiasmemorama/mis-familiasmemorama.component';
 import { CrearFamiliasmemoramaComponent } from './paginas/crear-familiasmemorama/crear-familiasmemorama.component';
+import { JuegoDeMemoramaSeleccionadoActivoComponent } from './paginas/juego-seleccionado-activo/juego-de-memorama-seleccionado-activo/juego-de-memorama-seleccionado-activo.component';
 
 const routes: Routes = [
 
@@ -293,6 +294,8 @@ const routes: Routes = [
   { path: 'inicio/:id/misColecciones/editarColeccion', component: EditarColeccionComponent },
   { path: 'inicio/:id/misColecciones/guardarColeccion', component: GuardarColeccionComponent },
   { path: 'inicio/:id/misColecciones/mostrarColeccion', component: MostrarColeccionComponent },
+  // { path: 'grupo/:id/juegos/juegoSeleccionadoActivo/mostrarRanking', component: JuegoDeMemoramaSeleccionadoActivoComponent },
+
 
   // FAMILIAS
   { path: 'inicio/:id/misFamiliasmemorama', component: MisFamiliasmemoramaComponent },

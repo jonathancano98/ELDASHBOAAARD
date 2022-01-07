@@ -277,6 +277,7 @@ import { AsignarRubricaComponent } from './paginas/juego/asignar-rubrica/asignar
 import { AsignacionFamiliaJuegoComponent } from './paginas/juego/asignacion-familia-juego/asignacion-familia-juego.component';
 import { CrearFamiliasmemoramaComponent } from './paginas/crear-familiasmemorama/crear-familiasmemorama.component';
 import { MisFamiliasmemoramaComponent } from './paginas/mis-familiasmemorama/mis-familiasmemorama.component';
+import { JuegoDeMemoramaSeleccionadoActivoComponent } from './paginas/juego-seleccionado-activo/juego-de-memorama-seleccionado-activo/juego-de-memorama-seleccionado-activo.component';
 
 
 @NgModule({
@@ -439,7 +440,8 @@ import { MisFamiliasmemoramaComponent } from './paginas/mis-familiasmemorama/mis
     ActividadConfigComponent,
     AsignacionFamiliaJuegoComponent,
     CrearFamiliasmemoramaComponent,
-    MisFamiliasmemoramaComponent
+    MisFamiliasmemoramaComponent,
+    JuegoDeMemoramaSeleccionadoActivoComponent
 
   ],
   imports: [

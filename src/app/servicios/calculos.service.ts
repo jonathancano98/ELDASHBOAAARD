@@ -26,6 +26,7 @@ import { AlumnoJuegoDeEvaluacion } from '../clases/AlumnoJuegoDeEvaluacion';
 import { EquipoJuegoDeEvaluacion } from '../clases/EquipoJuegoDeEvaluacion';
 import { EquipoJuegoDeVotacionUnoATodos } from '../clases/EquipoJuegoDeVotacionUnoATodos';
 import { TablaEquipoJuegoDeVotacionUnoATodos } from '../clases/TablaEquipoJuegoDeVotacionUnoATodos';
+import { TablaAlumnoJuegoDeMemorama } from '../clases/TablaAlumnoJuegoDeMemorama';
 
 
 
@@ -717,18 +718,44 @@ private async EliminarMatriculas(): Promise<any> {
 }
 
 
+public PrepararTablaRankingIndividualMemorama(listaAlumnosOrdenadaPorPuntos,
+  alumnosDelJuego){
+
+    const rankingJuegoDePuntos: any [] = [];
+
+    for (let i = 0; i < listaAlumnosOrdenadaPorPuntos.length; i++) {
+
+      let alumno: Alumno;
+      const alumnoId = listaAlumnosOrdenadaPorPuntos[i].alumnoId;
+
+      alumno = alumnosDelJuego.filter(res => res.id === alumnoId)[0];
+
+
+      rankingJuegoDePuntos[i] = new TablaAlumnoJuegoDeMemorama (i + 1, alumno.Nombre, alumno.PrimerApellido, alumno.SegundoApellido,
+        listaAlumnosOrdenadaPorPuntos[i].puntuacion);
+
+    }
+
+    return (rankingJuegoDePuntos);
+
+
+
+  }
+
+
 
   public PrepararTablaRankingIndividual(  listaAlumnosOrdenadaPorPuntos,
                                           alumnosDelJuego,
                                           nivelesDelJuego): any {
 
       const rankingJuegoDePuntos: any [] = [];
-      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < listaAlumnosOrdenadaPorPuntos.length; i++) {
         let alumno: Alumno;
         let nivel: Nivel;
+
         const alumnoId = listaAlumnosOrdenadaPorPuntos[i].alumnoId;
         const nivelId = listaAlumnosOrdenadaPorPuntos[i].nivelId;
+
         alumno = alumnosDelJuego.filter(res => res.id === alumnoId)[0];
 
         if (listaAlumnosOrdenadaPorPuntos[i].nivelId !== undefined) {

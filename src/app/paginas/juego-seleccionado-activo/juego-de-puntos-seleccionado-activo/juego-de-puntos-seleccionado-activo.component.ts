@@ -67,8 +67,8 @@ export class JuegoDePuntosSeleccionadoActivoComponent implements OnInit {
     this.juegoSeleccionado = this.sesion.DameJuego();
     this.listaSeleccionable[0] =  new Punto('Totales');
 
-    this.TraeTiposPuntosDelJuego();
-    this.NivelesDelJuego();
+    //this.TraeTiposPuntosDelJuego();
+    //this.NivelesDelJuego();
 
     if (this.juegoSeleccionado.Modo === 'Individual') {
       this.AlumnosDelJuego();
@@ -138,9 +138,9 @@ export class JuegoDePuntosSeleccionadoActivoComponent implements OnInit {
   RecuperarInscripcionesAlumnoJuego() {
     this.peticionesAPI.DameInscripcionesAlumnoJuegoDePuntos(this.juegoSeleccionado.id)
     .subscribe(inscripciones => {
+      console.log(inscripciones);
       this.listaAlumnosOrdenadaPorPuntos = inscripciones;
       // ordena la lista por puntos
-      // tslint:disable-next-line:only-arrow-functions
       this.listaAlumnosOrdenadaPorPuntos = this.listaAlumnosOrdenadaPorPuntos.sort(function(obj1, obj2) {
         return obj2.PuntosTotalesAlumno - obj1.PuntosTotalesAlumno;
       });
@@ -176,11 +176,7 @@ export class JuegoDePuntosSeleccionadoActivoComponent implements OnInit {
   TablaClasificacionTotal() {
 
     if (this.juegoSeleccionado.Modo === 'Individual') {
-      this.rankingJuegoDePuntos = this.calculos.PrepararTablaRankingIndividual (
-        this.listaAlumnosOrdenadaPorPuntos,
-        this.alumnosDelJuego,
-        this.nivelesDelJuego
-      );
+      this.rankingJuegoDePuntos = this.calculos.PrepararTablaRankingIndividual (this.listaAlumnosOrdenadaPorPuntos,this.alumnosDelJuego,this.nivelesDelJuego);
       console.log ('Ya tengo la tabla');
       // tslint:disable-next-line:max-line-length
      // this.rankingJuegoDePuntosTotal = this.calculos.DameRanking (this.listaAlumnosOrdenadaPorPuntos, this.alumnosDelJuego, this.nivelesDelJuego);

@@ -1438,6 +1438,11 @@ idcartas: any[]=[];
 
 
   }
+
+  GuardarPuntuacionMemorama() {
+    this.puntuacionCorrecta = this.myForm.value.PuntuacionCorrecta;
+    this.puntuacionIncorrecta = this.myForm.value.PuntuacionIncorrecta;
+  }
   RegistraCartas(){
 
     console.log("CARTAS QUE VAN A SER USADAS EN EL JUEGO:",this.vectorcartaseleccionadas);
@@ -1456,7 +1461,7 @@ idcartas: any[]=[];
 
     let JuegoMemoramaaentrtrar: JuegoMEMORAMA;
 
-    JuegoMemoramaaentrtrar = new JuegoMEMORAMA(this.tipoDeJuegoSeleccionado,this.modoDeJuegoSeleccionado,this.familiaSeleccionada.id,true, this.nombreDelJuego,this.idcartas);
+    JuegoMemoramaaentrtrar = new JuegoMEMORAMA(this.tipoDeJuegoSeleccionado,this.modoDeJuegoSeleccionado,this.familiaSeleccionada.id,true, this.nombreDelJuego,this.idcartas,this.puntuacionCorrecta,this.puntuacionIncorrecta);
 
     console.log("JuegoMemoramaaentrtrar:");
     console.log("JuegoMemoramaaentrtrar:",JuegoMemoramaaentrtrar);
@@ -1477,7 +1482,7 @@ idcartas: any[]=[];
                                 // Asignamos a los participantes en el juego
                                 if (this.modoDeJuegoSeleccionado === 'Individual') {
                                   for (let i = 0; i < this.alumnosGrupo.length; i++) {
-                                    this.peticionesAPI.InscribeAlumnoJuegoDeMemorama(new AlumnoJuegoDeMemorama(this.alumnosGrupo[i].id, this.juego.id))
+                                    this.peticionesAPI.InscribeAlumnoJuegoDeMemorama(new AlumnoJuegoDeMemorama(this.alumnosGrupo[i].id, this.juego.id,0))
                                       .subscribe();
                                       
                                     }
@@ -1589,6 +1594,7 @@ idcartas: any[]=[];
     this.puntuacionCorrecta = this.myForm.value.PuntuacionCorrecta;
     this.puntuacionIncorrecta = this.myForm.value.PuntuacionIncorrecta;
   }
+
   GuardarModoPresentacion(modoPresentacion) {
     this.modoPresentacion = modoPresentacion;
     this.tengoModoPresentacion = true;

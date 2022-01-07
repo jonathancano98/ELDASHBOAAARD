@@ -81,6 +81,7 @@ export class PeticionesAPIService {
 
   private APIUrlEquipoJuegoDeColeccion = this.host + ':3000/api/EquiposJuegoDeColeccion';
   private APIUrlEquipoJuegoDeMemoramas = this.host + ':3000/api/EquipoJuegoDeMemoramas';
+  private APIURLJuegoDeMemorama = this.host + ':3000/api/JuegoDeMemoramas'
 
   private APIUrlAlbum = this.host + ':3000/api/Albumes';
   private APIUrlAlbumEquipo = this.host + ':3000/api/albumsEquipo';
@@ -677,6 +678,10 @@ export class PeticionesAPIService {
   }
 
 
+  public DamealumnosjuegoMemorama(juegoid:number): Observable<any>{
+    console.log(this.APIUrlAlumnoJuegoDeMemorama + '?filter[where][juegoDeMemoramaId]='+juegoid);
+    return this.http.get<any>(this.APIUrlAlumnoJuegoDeMemorama + '?filter[where][juegoDeMemoramaId]='+juegoid);
+  }
 
 
     // public ModificaFamilia(coleccion: Coleccion, profesorId: number, coleccionId: number): Observable<Coleccion> {
@@ -923,6 +928,13 @@ export class PeticionesAPIService {
     return this.http.post<AlumnoJuegoDeMemorama>(this.APIUrlAlumnoJuegoDeMemorama, alumnoJuegoDeMemorama);
   }
   
+
+  public DameInfoAlumnosJuegoDeMemorama(juegoDeMemoramaId: number): Observable<any> {
+
+    return this.http.get<any>(this.APIURLJuegoDeMemorama + '/' + juegoDeMemoramaId + '/alumnos');
+  
+  }
+
 
 
 
