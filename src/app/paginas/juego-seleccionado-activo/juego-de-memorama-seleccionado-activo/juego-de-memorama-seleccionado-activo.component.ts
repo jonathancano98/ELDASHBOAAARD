@@ -15,7 +15,7 @@ export class JuegoDeMemoramaSeleccionadoActivoComponent implements OnInit {
     private peticionesAPI: PeticionesAPIService,
      ) { }
 
-displayedColumnsAlumnos: string[] = ['posicion', 'nombreAlumno', 'primerApellido', 'segundoApellido', 'puntuacion'];
+displayedColumnsAlumnos: string[] = ['posicion', 'nombreAlumno', 'primerApellido', 'segundoApellido', 'puntuacion','tiempo'];
 
   juegoSeleccionado:any;
   

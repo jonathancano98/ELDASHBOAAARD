@@ -4,12 +4,14 @@ export class AlumnoJuegoDeMemorama {
     juegoDeMemoramaId: number;
     id: number;
     puntuacion:number;
+    tiempo:any;
   
-    constructor(alumnoId?: number, juegoDePuntosId?: number, puntuacion?:number) {
+    constructor(alumnoId?: number, juegoDePuntosId?: number, puntuacion?:number,tiempo?:any) {
   
       this.alumnoId = alumnoId;
       this.juegoDeMemoramaId = juegoDePuntosId;
       this.puntuacion = puntuacion;
+      this.tiempo=tiempo;
   
     }
   }

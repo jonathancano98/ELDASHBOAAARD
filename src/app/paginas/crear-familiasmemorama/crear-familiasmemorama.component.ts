@@ -92,6 +92,7 @@ ficherosColeccion;
 coleccion;
 advertencia = true;
 idfamiliacreada:any;
+unasolavez=true;
 
 vectorcartas:any[]=[];
 vectorcartas2:any[]=[];
@@ -386,6 +387,8 @@ goForward(stepper: MatStepper){
   // Creamos una cromo y lo añadimos a la coleccion dandole un nombre, una probabilidad, un nivel y una imagen
   AgregarCartaFamilia() {
     
+    this.unasolavez=false;
+
     let nombreCromo: string;
 
     nombreCromo = this.myForm2.value.nombreCromo;
@@ -393,8 +396,9 @@ goForward(stepper: MatStepper){
     console.log("Entro a asignar la carta",nombreCromo+ "a la coleccionID",this.coleccionCreada.id);
    
     let Cartaparaagregar:Carta;
-    Cartaparaagregar = new Carta(nombreCromo ,this.nombreImagenCromoDelante, this.nombreImagenCromoDetras,undefined,undefined,undefined);
+    Cartaparaagregar = new Carta(nombreCromo ,this.nombreImagenCromoDelante, this.fileCromoDetras.name,undefined,undefined,undefined);
 
+    console.log("CARTA:",Cartaparaagregar);
     // this.cartasquevoyaagregarafamilia.push(Cartaparaagregar);
 
     // console.log("Vector cartas que agregaré:",this.cartasquevoyaagregarafamilia);

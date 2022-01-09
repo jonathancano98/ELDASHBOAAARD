@@ -561,11 +561,11 @@
                   <ng-template matStepLabel>Seleccion de Cartas</ng-template>
                   <label class="LabelStepper" style = "font-size: larger; font-weight: bolder;">Selecciona {{numerocartas}} Cartas:</label>
 
-                  <div (click)="CartaSeleccionada(i)" class = "enFilaMEMO"  style = "background: rgb(255, 255, 255); width:22%" *ngFor="let elem of vectorimagen;let i = index" >
+                  <div (click)="CartaSeleccionada(i)" class = "enFilaMEMO"  style = "background: rgb(255, 255, 255)" *ngFor="let elem of vectorimagen;let i = index" >
                     <!-- <div style = "height: 10%"><strong>Juego de Cuentos</strong></div> -->
                     <br>
-                    <div style = "height: 40%" >
-                      <img id="carta{{i}}" [src]="vectorimagen[i]"/>
+                    <div >
+                      <img class="imagenes" id="carta{{i}}" [src]="vectorimagen[i]"/>
                     </div>
                   </div>
                   <button type="button" class="btn Back" matStepperPrevious>Atrás</button>

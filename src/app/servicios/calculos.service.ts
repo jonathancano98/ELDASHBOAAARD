@@ -732,7 +732,7 @@ public PrepararTablaRankingIndividualMemorama(listaAlumnosOrdenadaPorPuntos,
 
 
       rankingJuegoDePuntos[i] = new TablaAlumnoJuegoDeMemorama (i + 1, alumno.Nombre, alumno.PrimerApellido, alumno.SegundoApellido,
-        listaAlumnosOrdenadaPorPuntos[i].puntuacion);
+        listaAlumnosOrdenadaPorPuntos[i].puntuacion,listaAlumnosOrdenadaPorPuntos[i].tiempo);
 
     }
 

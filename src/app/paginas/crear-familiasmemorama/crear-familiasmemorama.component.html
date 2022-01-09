@@ -154,6 +154,7 @@
               </button>
             </div>
 
+            <div *ngIf="unasolavez">
             <div *ngIf ="dosCaras" >
               <input #file id = "inputCromoDetras" type="file" accept= 'imagen/*' (change)="ExaminarImagenCartaDetras($event)" style="display:none">
               <img class="imagenCromo" *ngIf="imagenCromoDetras"  mat-card-image [src]="imagenCromoDetras">
@@ -162,6 +163,7 @@
               </button>
             </div>
           </div>
+        </div>
 
           <mat-card-actions align="end">
             <button  (click) = "LimpiarCampos()" type="button" class="btn Back">Limpiar Campos</button>

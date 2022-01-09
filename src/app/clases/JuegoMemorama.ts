@@ -21,8 +21,9 @@ export class JuegoMEMORAMA {
     idcartas:string[];
     puntuacionCorrecta:number;
     puntuacionIncorrecta:number;
+    dificultad:string;
   
-    constructor(Tipo?: string, Modo?: string,familiaId?:number, JuegoActivo?: boolean, NombreJuego?: string, idcartas?: string[],puntuacionCorrecta?:number,puntuacionIncorrecta?:number)  
+    constructor(Tipo?: string, Modo?: string,familiaId?:number, JuegoActivo?: boolean, NombreJuego?: string, idcartas?: string[],puntuacionCorrecta?:number,puntuacionIncorrecta?:number,dificultad?:string)  
     {
   
       this.Tipo = Tipo;
@@ -33,5 +34,6 @@ export class JuegoMEMORAMA {
       this.idcartas = idcartas;
       this.puntuacionCorrecta= puntuacionCorrecta;
       this.puntuacionIncorrecta=puntuacionIncorrecta;
+      this.dificultad=dificultad;
     }
 }
