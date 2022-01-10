@@ -549,6 +549,12 @@
                       <mat-label>Introduzca los puntos a restar por respuesta incorrecta</mat-label>
                       <input  matInput formControlName="PuntuacionIncorrecta" placeholder="Escriba puntos a restar" requiered>
                     </mat-form-field>
+                      <!-- casilla para introducir tiempo -->
+                      <mat-form-field>
+                        <mat-label>Introduzca el tiempo de duración del juego</mat-label>
+                        <input  matInput formControlName="TiempoDuracion" placeholder="Escriba tiempo límite en minutos" requiered>
+                      </mat-form-field>
+
                   <div class="btnCambiarStep">
                     <button type="button" class="btn Back" matStepperPrevious>Atrás</button>
                     <button [disabled]="!TengoPuntuaciones()" (click) = "GuardarPuntuacionMemorama()" type="button" class="btn Next" matStepperNext>Siguiente</button>

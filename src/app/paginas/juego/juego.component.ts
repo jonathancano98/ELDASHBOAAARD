@@ -181,6 +181,7 @@ export class JuegoComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   puntuacionCorrecta = 0; // le doy un valor porque si elojo kahoot esto no entre en juego pero debe estar definido para que se cree el juego
   puntuacionIncorrecta = 0;
+  TiempoDuracion=0;
   modoPresentacion = ' '; // Le pongo algo porque en caso de clasico en equipo no pongo nada aqui y el campo es obligatorio
   tengoModoPresentacion = false;
   seleccionModoPresentacion: string[] = ['Mismo orden para todos',
@@ -486,6 +487,7 @@ idcartas: any[]=[];
       DescripcionJuegoEvaluacion: ['', Validators.required],
       PuntuacionCorrecta: ['', Validators.required],
       PuntuacionIncorrecta: ['', Validators.required],
+      TiempoDuracion: ['', Validators.required],
       NumeroDeJornadas: ['', Validators.required],
       criterioPrivilegioComplemento1: ['', Validators.required],
       criterioPrivilegioComplemento2: ['', Validators.required],
@@ -1442,6 +1444,7 @@ idcartas: any[]=[];
   GuardarPuntuacionMemorama() {
     this.puntuacionCorrecta = this.myForm.value.PuntuacionCorrecta;
     this.puntuacionIncorrecta = this.myForm.value.PuntuacionIncorrecta;
+    this.TiempoDuracion = this.myForm.value.TiempoDuracion;
   }
   RegistraCartas(){
 
@@ -1461,7 +1464,7 @@ idcartas: any[]=[];
 
     let JuegoMemoramaaentrtrar: JuegoMEMORAMA;
 
-    JuegoMemoramaaentrtrar = new JuegoMEMORAMA(this.tipoDeJuegoSeleccionado,this.modoDeJuegoSeleccionado,this.familiaSeleccionada.id,true, this.nombreDelJuego,this.idcartas,this.puntuacionCorrecta,this.puntuacionIncorrecta,this.Mododificultad);
+    JuegoMemoramaaentrtrar = new JuegoMEMORAMA(this.tipoDeJuegoSeleccionado,this.modoDeJuegoSeleccionado,this.familiaSeleccionada.id,true, this.nombreDelJuego,this.idcartas,this.puntuacionCorrecta,this.puntuacionIncorrecta,this.Mododificultad,this.TiempoDuracion);
 
     console.log("JuegoMemoramaaentrtrar:");
     console.log("JuegoMemoramaaentrtrar:",JuegoMemoramaaentrtrar);
