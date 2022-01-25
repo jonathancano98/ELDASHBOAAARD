@@ -19,9 +19,9 @@ export class AlumnoJuegoDeCuento {
       this.permisoparaver = permisoparaver;
       this.alumnoID = alumnoID;
       this.Nombre = Nombre;
-      //////////////////////// AÑADIDO
+      
       this.Apellido = Apellidor;
-     //////////////////////// AÑADIDO
+     
 
     }
   }

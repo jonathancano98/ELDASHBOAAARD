@@ -17,6 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 
 import { Observable } from 'rxjs';
+import { logWarnings } from 'protractor/built/driverProviders';
 
 
 @Component({
@@ -54,6 +55,8 @@ export class JuegoDeCuentoSeleccionadoActivoComponent implements OnInit {
   Listadelosdelcuento: any =[];
   Listadelosdelcuentotrue: any =[];
   ListaAlumnosapellidojuego: any=[];
+  alumnosDelJuegoconApellidos: any[]=[];
+  datasourceAlumno2: any;
   /////////////////////
 
   constructor(public dialog: MatDialog,
@@ -115,16 +118,17 @@ export class JuegoDeCuentoSeleccionadoActivoComponent implements OnInit {
         this.haCambiado = Array(this.alumnosDelJuego.length).fill(false);
         this.PrepararTabla();
         this.alumnosDelJuego.forEach(element => {
-                                                  /////////////////////////////////////////////////////////AÑADIDO
+                                                  ///////////////////////////////////////////////////////AÑADIDO
                                                   // this.peticionesAPI.DameAlumno(element.alumnoID)
                                                   // .subscribe(alumno => {
-                                                  //                         console.log('Apedillo Alumno: ',alumno.SegundoApellido);
+                                                  //                         console.log('Apedillo Alumno: ',alumno,alumno.SegundoApellido);
                                                   //                         this.ListaAlumnosapellidojuego.push(alumno.SegundoApellido);
                                                   //                      })
                                                   //                      console.log('Lista apellidos juego:',this.ListaAlumnosapellidojuego);
-                                                  
+                                                                       
+                                                    
                                                 
-                                                  /////////////////////////////////////////////////////////AÑADIDO        
+                                                  ///////////////////////////////////////////////////////AÑADIDO        
                                                   this.peticionesAPI.dameCuento(element.id)
                                                    .subscribe((res) => {
                                                                           if (res.length != 0) {
@@ -144,13 +148,68 @@ export class JuegoDeCuentoSeleccionadoActivoComponent implements OnInit {
   /**
    * Prepara la tabla con todos los privilegios que tengan asignados los alumnos
    */
+
+  async Listaconapellidos(){
+
+    console.log("VAMOS A PONER APELLIDOS")
+
+    for(let i=0; this.alumnosDelJuego.length>i;i++){
+
+     let alumnoid = this.alumnosDelJuego[i].alumnoID; 
+     let alumno = await this.peticionesAPI.DameAlumno(alumnoid).toPromise();
+
+     this.ListaAlumnosapellidojuego.push(alumno.PrimerApellido);
+
+
+    }
+
+                          
+
+    for(let i=0;this.ListaAlumnosapellidojuego.length>i;i++){
+
+
+      let nombre=this.alumnosDelJuego[i].Nombre;
+      let alumnoID = this.alumnosDelJuego[i].alumnoID;
+      let id = this.alumnosDelJuego[i].id;
+      let juegoId = this.alumnosDelJuego[i].alumnojuegodecuentoId;
+      let nivel1 = this.alumnosDelJuego[i].nivel1;
+      let nivel2 = this.alumnosDelJuego[i].nivel2;
+      let nivel3 = this.alumnosDelJuego[i].nivel3;
+      let permisoparaver = this.alumnosDelJuego[i].permisoparaver;
+      let apellido = this.ListaAlumnosapellidojuego[i];
+
+      let alumnoconapellido = new AlumnoJuegoDeCuento(nivel1,nivel2,nivel3,permisoparaver,apellido,nombre,alumnoID);
+
+      this.alumnosDelJuegoconApellidos.push(alumnoconapellido);
+      }
+
+    // console.log("ALUUUMNOOS CON APELLIDOS",this.alumnosDelJuegoconApellidos);
+
+  }
+
   PrepararTabla() {
+
+   // this.Listaconapellidos();
+
+   // console.log("COMPARATIVA:",this.alumnosDelJuego,this.alumnosDelJuegoconApellidos)
+
+    // this.alumnosDelJuego=this.alumnosDelJuegoconApellidos;
+
+    // console.log("Alumnos del juego modificados",this.alumnosDelJuego);
+
+   // this.datasourceAlumno = new MatTableDataSource(this.alumnosDelJuegoconApellidos);
+
+
     this.datasourceAlumno = new MatTableDataSource(this.alumnosDelJuego);
 
-    console.log(this.datasourceAlumno);
-    this.datasourceAlumno.data.forEach(row => {
 
-      const inscripcion = this.alumnosDelJuego.filter(ins => ins.alumnoID === row.alumnoID)[0];
+    // console.log("DATAA",this.datasourceAlumno.data,this.datasourceAlumno2.data);
+
+    this.datasourceAlumno.data.forEach(row => {
+     
+      console.log("ROOOW",row);
+      const inscripcion = this.alumnosDelJuegoconApellidos.filter(ins => ins.alumnoID === row.alumnoID)[0];
+      console.log("INSCRIPCION",inscripcion)
       // Ahora activo o desactivo el selector de cada privilegio según tenga el alumno ese privilegio o no
       if (inscripcion.nivel1) {
         this.selection1.select(row);

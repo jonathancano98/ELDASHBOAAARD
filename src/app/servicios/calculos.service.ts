@@ -118,6 +118,22 @@ private async EliminaJuegos(): Promise<any> {
     }
 
 }
+public async EliminarJuegoDeMemorama(juego: any) {
+  // Primero borramos las inscripciones de alumnos 
+  if (juego.Modo === 'Individual') {
+
+    const inscripciones = await this.peticionesAPI.DamealumnosjuegoMemorama(juego.id).toPromise();
+
+    for (let i = 0; i < inscripciones.length ; i++ ) {
+      console.log("Inscripciones",inscripciones);
+
+      await this.peticionesAPI.BorraInscripcionAlumnoJuegoDeMemorama(inscripciones[i].id).toPromise();
+    }
+  } 
+  // Ahora borramos el juego
+  await this.peticionesAPI.BorraJuegoDeMemorama (juego.id).toPromise();
+  console.log("JUEGO DE MEMORAMA ELIMINADO");
+}
 
 public async EliminarJuegoDePuntos(juego: any) {
   // Primero borramos las inscripciones de alumnos o equipos

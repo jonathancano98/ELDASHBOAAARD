@@ -110,14 +110,8 @@
     
         <ng-container matColumnDef="permisoparavotar">
           <th mat-header-cell *matHeaderCellDef class="tituloColumnaTabla" style="width: 5%"> VER CUENTO <br>
-    
-    
-            <!--<mat-checkbox (change)="$event ? MasterToggle(5) : null;" [checked]="selection5.hasValue() && IsAllSelected(5)"
-              [indeterminate]="selection5.hasValue() && !IsAllSelected(5)">
-            </mat-checkbox>-->
           </th>
-    
-          <!--<td mat-cell style="text-align: left" *matCellDef="let row; let i = index">   -->
+  
             <td mat-cell style="text-align: left" *matCellDef="let row; let i = index">
     
               <button *ngIf="this.listaLibros[i]" (click) = "irVisorCuento(this.listaLibros[i].titulo)"  mat-icon-button matTooltip="Visualizar cuento">
@@ -126,11 +120,6 @@
             <button *ngIf="!this.listaLibros[i]" (click) = "irVisorCuento(this.listaLibros[i].titulo)"  mat-icon-button matTooltip="No puedes visualizar cuento">
               <i class="material-icons red md-36">visibility</i>
             </button>
-    
-    
-            <!-- <mat-checkbox (click)="$event.stopPropagation()"
-              (change)="$event ? selection5.toggle(row) : null; HaCambiado (5,i);" [checked]="selection5.isSelected(row)">
-            </mat-checkbox> --> 
     
           </td>
         </ng-container>

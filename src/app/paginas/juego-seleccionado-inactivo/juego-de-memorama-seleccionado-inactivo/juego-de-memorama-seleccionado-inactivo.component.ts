@@ -4,14 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 
-
-
 @Component({
-  selector: 'app-juego-de-memorama-seleccionado-activo',
-  templateUrl: './juego-de-memorama-seleccionado-activo.component.html',
-  styleUrls: ['./juego-de-memorama-seleccionado-activo.component.scss']
+  selector: 'app-juego-de-memorama-seleccionado-inactivo',
+  templateUrl: './juego-de-memorama-seleccionado-inactivo.component.html',
+  styleUrls: ['./juego-de-memorama-seleccionado-inactivo.component.scss']
 })
-export class JuegoDeMemoramaSeleccionadoActivoComponent implements OnInit {
+export class JuegoDeMemoramaSeleccionadoInactivoComponent implements OnInit {
 
   constructor( private calculos: CalculosService,
     private sesion: SesionService,
@@ -83,40 +81,47 @@ displayedColumnsAlumnos: string[] = ['posicion', 'nombreAlumno', 'primerApellido
   }
 
 
-  DesactivarJuego() {
-    console.log(this.juegoSeleccionado);
-    this.juegoSeleccionado.JuegoActivo = false;
-    this.peticionesAPI.CambiaEstadoJuegoDeMemorama(this.juegoSeleccionado)
-    .subscribe(res => {
-        if (res !== undefined) {
-          console.log(res);
-          console.log('juego desactivado');
-          this.location.back();
-        }
-    });
-  }
-
-  AbrirDialogoConfirmacionDesactivar(): void {
-
+  Reactivar() {
     Swal.fire({
-      title: 'Desactivar',
-      text: "Estas segura/o de que quieres desactivar: " + this.juegoSeleccionado.Tipo,
+      title: '¿Seguro que quieres activar el juego?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
+      confirmButtonText: 'Si, estoy seguro'
     }).then((result) => {
       if (result.value) {
 
-        this.DesactivarJuego();
-
-        Swal.fire('Desactivado', this.juegoSeleccionado.Tipo + ' desactivado correctamente', 'success');
-
+        this.juegoSeleccionado.JuegoActivo = true;
+        this.peticionesAPI.CambiaEstadoJuegoDeMemorama (this.juegoSeleccionado)
+        .subscribe(res => {
+            if (res !== undefined) {
+              Swal.fire('El juego se ha activado correctamente');
+              this.location.back();
+            }
+        });
       }
-    })
-   }
+    });
+  }
 
+   
+  Eliminar() {
+    Swal.fire({
+      title: '¿Seguro que quieres eliminar el juego?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, estoy seguro'
+    }).then( async (result) => {
+      if (result.value) {
+        await this.calculos.EliminarJuegoDeMemorama(this.juegoSeleccionado);
+        Swal.fire('El juego se ha eliminado correctamente');
+        this.location.back();
+      }
+    });
+  }
+
+  
 
 }

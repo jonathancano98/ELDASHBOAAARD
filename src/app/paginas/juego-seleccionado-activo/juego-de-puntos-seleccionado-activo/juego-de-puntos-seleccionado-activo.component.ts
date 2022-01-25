@@ -319,14 +319,6 @@ export class JuegoDePuntosSeleccionadoActivoComponent implements OnInit {
 
   AbrirDialogoConfirmacionDesactivar(): void {
 
-    // const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-    //   height: '150px',
-    //   data: {
-    //     mensaje: this.mensaje,
-    //     nombre: this.juegoSeleccionado.Tipo,
-    //   }
-    // });
-
     Swal.fire({
       title: 'Desactivar',
       text: "Estas segura/o de que quieres desactivar: " + this.juegoSeleccionado.Tipo,
@@ -345,13 +337,6 @@ export class JuegoDePuntosSeleccionadoActivoComponent implements OnInit {
 
       }
     })
-
-  //   dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-  //     if (confirmed) {
-  //       this.DesactivarJuego();
-  //       Swal.fire('Desactivado', this.juegoSeleccionado.Tipo + ' desactivado correctamente', 'success');
-  //     }
-  //   });
    }
 
 }

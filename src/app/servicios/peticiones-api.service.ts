@@ -759,8 +759,17 @@ export class PeticionesAPIService {
     return this.http.put<Juego>(this.APIUrlJuegoDePuntos + '/' + juego.id , juego);
   }
 
+  public CambiaEstadoJuegoDeMemorama(juego: Juego): Observable<Juego> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<Juego>(this.APIURLJuegoDeMemorama + '/' + juego.id , juego);
+  }
+
   public BorraJuegoDePuntos(juegoDePuntosId: number): Observable<Juego> {
     return this.http.delete<Juego>(this.APIUrlJuegoDePuntos + '/' + juegoDePuntosId);
+  }
+
+  public BorraJuegoDeMemorama(juegoDeMemoramaId: number): Observable<Juego> {
+    return this.http.delete<Juego>(this.APIURLJuegoDeMemorama + '/' + juegoDeMemoramaId);
   }
 
   /////////////////////////////////// GESTION JUEGO DE PUNTOS INDIVIDUAL ////////////////////////////////////////////////////////
@@ -790,6 +799,8 @@ export class PeticionesAPIService {
   public BorraInscripcionAlumnoJuegoDePuntos(inscripcionId: number): any {
     return this.http.delete<any>(this.APIUrlAlumnoJuegoDePuntos + '/' + inscripcionId);
   }
+
+
 
   public DameInscripcionesAlumnoJuegoDePuntos(juegoDePuntosId: number): Observable<AlumnoJuegoDePuntos[]> {
     return this.http.get<AlumnoJuegoDePuntos[]>(this.APIUrlAlumnoJuegoDePuntos + '?filter[where][juegoDePuntosId]=' + juegoDePuntosId);
@@ -920,7 +931,9 @@ export class PeticionesAPIService {
     return this.http.post<AlumnoJuegoDeColeccion>(this.APIUrlAlumnoJuegoDeColeccion, alumnoJuegoDeColeccion);
   }
 
-
+  public BorraInscripcionAlumnoJuegoDeMemorama(inscripcionId: number): any {
+    return this.http.delete<any>(this.APIUrlAlumnoJuegoDeMemorama + '/' + inscripcionId);
+  }
 
 
   public InscribeAlumnoJuegoDeMemorama(alumnoJuegoDeMemorama: AlumnoJuegoDeMemorama) {
