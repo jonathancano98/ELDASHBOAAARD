@@ -81,6 +81,7 @@ export class PeticionesAPIService {
 
   private APIUrlEquipoJuegoDeColeccion = this.host + ':3000/api/EquiposJuegoDeColeccion';
   private APIUrlEquipoJuegoDeMemoramas = this.host + ':3000/api/EquipoJuegoDeMemoramas';
+  
   private APIURLJuegoDeMemorama = this.host + ':3000/api/JuegoDeMemoramas'
 
   private APIUrlAlbum = this.host + ':3000/api/Albumes';
