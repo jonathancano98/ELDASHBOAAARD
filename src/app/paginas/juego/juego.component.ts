@@ -1354,7 +1354,13 @@ idcartas: any[]=[];
 
 
    }
-
+   if(this.familiaSeleccionada.relacion === true)
+   {
+     this.numerocartas= this.numerocartas*2;
+     console.log("POOR 2")
+   }
+   else{this.numerocartas= this.numerocartas}
+  
    console.log("MODO DIFICULTAD",this.Mododificultad);
    console.log("Familia SELECCIONADA",this.familiaSeleccionada.Nombre);
 
@@ -1387,6 +1393,7 @@ idcartas: any[]=[];
      console.log(this.vectorimagen);
 
   }
+  
   CartaSeleccionada(i){
 
     console.log("CARTA SELECCIONADA",i);
@@ -1868,6 +1875,7 @@ idcartas: any[]=[];
  
   RecibeFamiliasElegidas($event) {
     this.familiasElegidas = $event;
+    console.log("La recibo en juego.ts",this.familiasElegidas);
     this.tengoFamilias = true;
   }
 
